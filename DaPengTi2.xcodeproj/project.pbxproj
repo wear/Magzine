@@ -1,0 +1,284 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D8497E1B1585C4E400426273 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1A1585C4E400426273 /* UIKit.framework */; };
+		D8497E1D1585C4E400426273 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1C1585C4E400426273 /* Foundation.framework */; };
+		D8497E1F1585C4E400426273 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1E1585C4E400426273 /* CoreGraphics.framework */; };
+		D8497E251585C4E500426273 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D8497E231585C4E500426273 /* InfoPlist.strings */; };
+		D8497E271585C4E500426273 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E261585C4E500426273 /* main.m */; };
+		D8497E2B1585C4E500426273 /* DaPengTi2AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E2A1585C4E500426273 /* DaPengTi2AppDelegate.m */; };
+		D8497E2E1585C4E500426273 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8497E2C1585C4E500426273 /* MainStoryboard.storyboard */; };
+		D8497E311585C4E500426273 /* DaPengTi2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E301585C4E500426273 /* DaPengTi2ViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D8497E161585C4E400426273 /* DaPengTi2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaPengTi2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D8497E1A1585C4E400426273 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D8497E1C1585C4E400426273 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D8497E1E1585C4E400426273 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D8497E221585C4E500426273 /* DaPengTi2-Info.plist */ = {isa = PBXFileReference; path = "DaPengTi2-Info.plist"; sourceTree = "<group>"; };
+		D8497E241585C4E500426273 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D8497E261585C4E500426273 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D8497E281585C4E500426273 /* DaPengTi2-Prefix.pch */ = {isa = PBXFileReference; path = "DaPengTi2-Prefix.pch"; sourceTree = "<group>"; };
+		D8497E291585C4E500426273 /* DaPengTi2AppDelegate.h */ = {isa = PBXFileReference; path = DaPengTi2AppDelegate.h; sourceTree = "<group>"; };
+		D8497E2A1585C4E500426273 /* DaPengTi2AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaPengTi2AppDelegate.m; sourceTree = "<group>"; };
+		D8497E2D1585C4E500426273 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		D8497E2F1585C4E500426273 /* DaPengTi2ViewController.h */ = {isa = PBXFileReference; path = DaPengTi2ViewController.h; sourceTree = "<group>"; };
+		D8497E301585C4E500426273 /* DaPengTi2ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaPengTi2ViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D8497E131585C4E400426273 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8497E1B1585C4E400426273 /* UIKit.framework in Frameworks */,
+				D8497E1D1585C4E400426273 /* Foundation.framework in Frameworks */,
+				D8497E1F1585C4E400426273 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D8497E0B1585C4E300426273 = {
+			isa = PBXGroup;
+			children = (
+				D8497E201585C4E400426273 /* DaPengTi2 */,
+				D8497E191585C4E400426273 /* Frameworks */,
+				D8497E171585C4E400426273 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D8497E171585C4E400426273 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D8497E161585C4E400426273 /* DaPengTi2.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D8497E191585C4E400426273 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D8497E1A1585C4E400426273 /* UIKit.framework */,
+				D8497E1C1585C4E400426273 /* Foundation.framework */,
+				D8497E1E1585C4E400426273 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8497E201585C4E400426273 /* DaPengTi2 */ = {
+			isa = PBXGroup;
+			children = (
+				D8497E291585C4E500426273 /* DaPengTi2AppDelegate.h */,
+				D8497E2A1585C4E500426273 /* DaPengTi2AppDelegate.m */,
+				D8497E2C1585C4E500426273 /* MainStoryboard.storyboard */,
+				D8497E2F1585C4E500426273 /* DaPengTi2ViewController.h */,
+				D8497E301585C4E500426273 /* DaPengTi2ViewController.m */,
+				D8497E211585C4E500426273 /* Supporting Files */,
+			);
+			path = DaPengTi2;
+			sourceTree = "<group>";
+		};
+		D8497E211585C4E500426273 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D8497E221585C4E500426273 /* DaPengTi2-Info.plist */,
+				D8497E231585C4E500426273 /* InfoPlist.strings */,
+				D8497E261585C4E500426273 /* main.m */,
+				D8497E281585C4E500426273 /* DaPengTi2-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D8497E151585C4E400426273 /* DaPengTi2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D8497E341585C4E500426273 /* Build configuration list for PBXNativeTarget "DaPengTi2" */;
+			buildPhases = (
+				D8497E121585C4E400426273 /* Sources */,
+				D8497E131585C4E400426273 /* Frameworks */,
+				D8497E141585C4E400426273 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DaPengTi2;
+			productName = DaPengTi2;
+			productReference = D8497E161585C4E400426273 /* DaPengTi2.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D8497E0D1585C4E300426273 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DaPengTi2;
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = D8497E101585C4E300426273 /* Build configuration list for PBXProject "DaPengTi2" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D8497E0B1585C4E300426273;
+			productRefGroup = D8497E171585C4E400426273 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D8497E151585C4E400426273 /* DaPengTi2 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D8497E141585C4E400426273 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8497E251585C4E500426273 /* InfoPlist.strings in Resources */,
+				D8497E2E1585C4E500426273 /* MainStoryboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D8497E121585C4E400426273 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8497E271585C4E500426273 /* main.m in Sources */,
+				D8497E2B1585C4E500426273 /* DaPengTi2AppDelegate.m in Sources */,
+				D8497E311585C4E500426273 /* DaPengTi2ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D8497E231585C4E500426273 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8497E241585C4E500426273 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D8497E2C1585C4E500426273 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D8497E2D1585C4E500426273 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D8497E321585C4E500426273 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		D8497E331585C4E500426273 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D8497E351585C4E500426273 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DaPengTi2/DaPengTi2-Prefix.pch";
+				INFOPLIST_FILE = "DaPengTi2/DaPengTi2-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D8497E361585C4E500426273 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DaPengTi2/DaPengTi2-Prefix.pch";
+				INFOPLIST_FILE = "DaPengTi2/DaPengTi2-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D8497E101585C4E300426273 /* Build configuration list for PBXProject "DaPengTi2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8497E321585C4E500426273 /* Debug */,
+				D8497E331585C4E500426273 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D8497E341585C4E500426273 /* Build configuration list for PBXNativeTarget "DaPengTi2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D8497E351585C4E500426273 /* Debug */,
+				D8497E361585C4E500426273 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D8497E0D1585C4E300426273 /* Project object */;
+}
