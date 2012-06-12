@@ -7,6 +7,8 @@
 //
 
 #import "DaPengTi2ViewController.h"
+#import "MarkupParser.h"
+#import "PostView.h"
 
 @interface DaPengTi2ViewController ()
 
@@ -18,6 +20,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"txt"];
+    NSString* text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    MarkupParser* p = [[MarkupParser alloc] init];
+    NSAttributedString* attString = [p attrStringFromMarkup: text];
+	[(PostView *)[self view] setAttString:attString withImages: p.images];
+    [(PostView *)[self view] buildFrames];
 }
 
 - (void)viewDidUnload
@@ -29,6 +37,10 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return YES;
+}
+
+-(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+	[(PostView*)self.view updateFrames]; 
 }
 
 @end

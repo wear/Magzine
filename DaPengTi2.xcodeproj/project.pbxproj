@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D8279CAD1585E3170084C8AA /* PostColumnVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = D8279CAC1585E3170084C8AA /* PostColumnVIew.m */; };
+		D8279CB3158618AE0084C8AA /* xkily.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8279CB2158618AE0084C8AA /* xkily.jpg */; };
 		D8497E1B1585C4E400426273 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1A1585C4E400426273 /* UIKit.framework */; };
 		D8497E1D1585C4E400426273 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1C1585C4E400426273 /* Foundation.framework */; };
 		D8497E1F1585C4E400426273 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1E1585C4E400426273 /* CoreGraphics.framework */; };
@@ -15,22 +17,49 @@
 		D8497E2B1585C4E500426273 /* DaPengTi2AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E2A1585C4E500426273 /* DaPengTi2AppDelegate.m */; };
 		D8497E2E1585C4E500426273 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D8497E2C1585C4E500426273 /* MainStoryboard.storyboard */; };
 		D8497E311585C4E500426273 /* DaPengTi2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E301585C4E500426273 /* DaPengTi2ViewController.m */; };
+		D8497E3D1585C5BF00426273 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E391585C5BF00426273 /* HTMLNode.m */; };
+		D8497E3E1585C5BF00426273 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E3B1585C5BF00426273 /* HTMLParser.m */; };
+		D8497E3F1585C5BF00426273 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = D8497E3C1585C5BF00426273 /* README.md */; };
+		D8497E411585C60D00426273 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E401585C60D00426273 /* libxml2.dylib */; };
+		D8497E431585C79200426273 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E421585C79200426273 /* CoreText.framework */; };
+		D8497E461585C84600426273 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = D8497E451585C84600426273 /* test.txt */; };
+		D8497E4A1585C88300426273 /* PostView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E491585C88300426273 /* PostView.m */; };
+		D8497E511585CA5200426273 /* MarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E501585CA5200426273 /* MarkupParser.m */; };
+		D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */; };
+		D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D8279CAB1585E3170084C8AA /* PostColumnVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostColumnVIew.h; sourceTree = "<group>"; };
+		D8279CAC1585E3170084C8AA /* PostColumnVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostColumnVIew.m; sourceTree = "<group>"; };
+		D8279CB2158618AE0084C8AA /* xkily.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = xkily.jpg; path = Resources/xkily.jpg; sourceTree = "<group>"; };
 		D8497E161585C4E400426273 /* DaPengTi2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaPengTi2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8497E1A1585C4E400426273 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D8497E1C1585C4E400426273 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D8497E1E1585C4E400426273 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		D8497E221585C4E500426273 /* DaPengTi2-Info.plist */ = {isa = PBXFileReference; path = "DaPengTi2-Info.plist"; sourceTree = "<group>"; };
+		D8497E221585C4E500426273 /* DaPengTi2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DaPengTi2-Info.plist"; sourceTree = "<group>"; };
 		D8497E241585C4E500426273 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D8497E261585C4E500426273 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D8497E281585C4E500426273 /* DaPengTi2-Prefix.pch */ = {isa = PBXFileReference; path = "DaPengTi2-Prefix.pch"; sourceTree = "<group>"; };
-		D8497E291585C4E500426273 /* DaPengTi2AppDelegate.h */ = {isa = PBXFileReference; path = DaPengTi2AppDelegate.h; sourceTree = "<group>"; };
+		D8497E281585C4E500426273 /* DaPengTi2-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DaPengTi2-Prefix.pch"; sourceTree = "<group>"; };
+		D8497E291585C4E500426273 /* DaPengTi2AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaPengTi2AppDelegate.h; sourceTree = "<group>"; };
 		D8497E2A1585C4E500426273 /* DaPengTi2AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaPengTi2AppDelegate.m; sourceTree = "<group>"; };
 		D8497E2D1585C4E500426273 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		D8497E2F1585C4E500426273 /* DaPengTi2ViewController.h */ = {isa = PBXFileReference; path = DaPengTi2ViewController.h; sourceTree = "<group>"; };
+		D8497E2F1585C4E500426273 /* DaPengTi2ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DaPengTi2ViewController.h; sourceTree = "<group>"; };
 		D8497E301585C4E500426273 /* DaPengTi2ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DaPengTi2ViewController.m; sourceTree = "<group>"; };
+		D8497E381585C5BF00426273 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLNode.h; path = lib/HTMLNode.h; sourceTree = "<group>"; };
+		D8497E391585C5BF00426273 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLNode.m; path = lib/HTMLNode.m; sourceTree = "<group>"; };
+		D8497E3A1585C5BF00426273 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLParser.h; path = lib/HTMLParser.h; sourceTree = "<group>"; };
+		D8497E3B1585C5BF00426273 /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLParser.m; path = lib/HTMLParser.m; sourceTree = "<group>"; };
+		D8497E3C1585C5BF00426273 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = lib/README.md; sourceTree = "<group>"; };
+		D8497E401585C60D00426273 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		D8497E421585C79200426273 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		D8497E451585C84600426273 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = test.txt; path = Resources/test.txt; sourceTree = "<group>"; };
+		D8497E481585C88300426273 /* PostView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostView.h; sourceTree = "<group>"; };
+		D8497E491585C88300426273 /* PostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostView.m; sourceTree = "<group>"; };
+		D8497E4F1585CA5200426273 /* MarkupParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkupParser.h; path = lib/MarkupParser.h; sourceTree = "<group>"; };
+		D8497E501585CA5200426273 /* MarkupParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkupParser.m; path = lib/MarkupParser.m; sourceTree = "<group>"; };
+		D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941222622892.jpg; path = Resources/133941222622892.jpg; sourceTree = "<group>"; };
+		D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941243718342.jpg; path = Resources/133941243718342.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8497E431585C79200426273 /* CoreText.framework in Frameworks */,
+				D8497E411585C60D00426273 /* libxml2.dylib in Frameworks */,
 				D8497E1B1585C4E400426273 /* UIKit.framework in Frameworks */,
 				D8497E1D1585C4E400426273 /* Foundation.framework in Frameworks */,
 				D8497E1F1585C4E400426273 /* CoreGraphics.framework in Frameworks */,
@@ -67,6 +98,8 @@
 		D8497E191585C4E400426273 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D8497E421585C79200426273 /* CoreText.framework */,
+				D8497E401585C60D00426273 /* libxml2.dylib */,
 				D8497E1A1585C4E400426273 /* UIKit.framework */,
 				D8497E1C1585C4E400426273 /* Foundation.framework */,
 				D8497E1E1585C4E400426273 /* CoreGraphics.framework */,
@@ -77,9 +110,12 @@
 		D8497E201585C4E400426273 /* DaPengTi2 */ = {
 			isa = PBXGroup;
 			children = (
-				D8497E291585C4E500426273 /* DaPengTi2AppDelegate.h */,
-				D8497E2A1585C4E500426273 /* DaPengTi2AppDelegate.m */,
+				D8497E471585C86A00426273 /* Views */,
+				D8497E441585C80B00426273 /* Resources */,
+				D8497E371585C57D00426273 /* lib */,
 				D8497E2C1585C4E500426273 /* MainStoryboard.storyboard */,
+				D8497E4F1585CA5200426273 /* MarkupParser.h */,
+				D8497E501585CA5200426273 /* MarkupParser.m */,
 				D8497E2F1585C4E500426273 /* DaPengTi2ViewController.h */,
 				D8497E301585C4E500426273 /* DaPengTi2ViewController.m */,
 				D8497E211585C4E500426273 /* Supporting Files */,
@@ -90,12 +126,48 @@
 		D8497E211585C4E500426273 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D8497E291585C4E500426273 /* DaPengTi2AppDelegate.h */,
+				D8497E2A1585C4E500426273 /* DaPengTi2AppDelegate.m */,
 				D8497E221585C4E500426273 /* DaPengTi2-Info.plist */,
 				D8497E231585C4E500426273 /* InfoPlist.strings */,
 				D8497E261585C4E500426273 /* main.m */,
 				D8497E281585C4E500426273 /* DaPengTi2-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D8497E371585C57D00426273 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				D8497E3A1585C5BF00426273 /* HTMLParser.h */,
+				D8497E3B1585C5BF00426273 /* HTMLParser.m */,
+				D8497E381585C5BF00426273 /* HTMLNode.h */,
+				D8497E391585C5BF00426273 /* HTMLNode.m */,
+				D8497E3C1585C5BF00426273 /* README.md */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		D8497E441585C80B00426273 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */,
+				D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */,
+				D8279CB2158618AE0084C8AA /* xkily.jpg */,
+				D8497E451585C84600426273 /* test.txt */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D8497E471585C86A00426273 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D8497E481585C88300426273 /* PostView.h */,
+				D8497E491585C88300426273 /* PostView.m */,
+				D8279CAB1585E3170084C8AA /* PostColumnVIew.h */,
+				D8279CAC1585E3170084C8AA /* PostColumnVIew.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +223,11 @@
 			files = (
 				D8497E251585C4E500426273 /* InfoPlist.strings in Resources */,
 				D8497E2E1585C4E500426273 /* MainStoryboard.storyboard in Resources */,
+				D8497E3F1585C5BF00426273 /* README.md in Resources */,
+				D8497E461585C84600426273 /* test.txt in Resources */,
+				D8279CB3158618AE0084C8AA /* xkily.jpg in Resources */,
+				D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */,
+				D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +241,11 @@
 				D8497E271585C4E500426273 /* main.m in Sources */,
 				D8497E2B1585C4E500426273 /* DaPengTi2AppDelegate.m in Sources */,
 				D8497E311585C4E500426273 /* DaPengTi2ViewController.m in Sources */,
+				D8497E3D1585C5BF00426273 /* HTMLNode.m in Sources */,
+				D8497E3E1585C5BF00426273 /* HTMLParser.m in Sources */,
+				D8497E4A1585C88300426273 /* PostView.m in Sources */,
+				D8497E511585CA5200426273 /* MarkupParser.m in Sources */,
+				D8279CAD1585E3170084C8AA /* PostColumnVIew.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +291,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -228,6 +311,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/usr/include/libxml2/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
@@ -277,6 +361,7 @@
 				D8497E361585C4E500426273 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
