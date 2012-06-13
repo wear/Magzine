@@ -24,43 +24,17 @@
 
 -(void)setAttString:(NSAttributedString *)string withImages:(NSArray*)imgs
 {
-	if (!_attString) {
-        //設定對齊方式
-       CTTextAlignment alignment = kCTJustifiedTextAlignment;
-       CTParagraphStyleSetting alignmentStyle;
-       alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;
-       alignmentStyle.valueSize=sizeof(alignment);
-       alignmentStyle.value=&alignment;
-       
-       //設定行高
-       CGFloat lineSpace1= 32;
-       CTParagraphStyleSetting lineSpaceStyle1;
-       lineSpaceStyle1.spec=kCTParagraphStyleSpecifierMinimumLineHeight;
-       lineSpaceStyle1.valueSize=sizeof(lineSpace1);
-       lineSpaceStyle1.value=&lineSpace1;
-       
-       //换行模式
-       CTLineBreakMode lineBreakMode = kCTLineBreakByWordWrapping;
-       CTParagraphStyleSetting lineBreak;
-       lineBreak.spec = kCTParagraphStyleSpecifierLineBreakMode;
-       lineBreak.valueSize = sizeof(lineBreakMode);
-       lineBreak.value = &lineBreakMode;
-       
-       CTParagraphStyleSetting settings[3]={
-           alignmentStyle,lineSpaceStyle1,lineBreak
-       };
-       
-       CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(settings, sizeof(settings));
-        
-        NSMutableAttributedString* stringCopy = [[NSMutableAttributedString alloc] initWithAttributedString:string];
-		//設定段落樣式
-        [stringCopy addAttribute:(id)kCTParagraphStyleAttributeName value:(__bridge id)paragraphStyle range:NSMakeRange(0,[string length])];
-        
-        _attString = stringCopy;
-        CFRelease(paragraphStyle);
-        
-        self.images = imgs;
-    }	
+    self.attString = string;
+    self.images = imgs;
+}
+
+-(void)updateFrames{
+	self.frames = nil;
+    self.images = nil;
+    for (UIView *view in self.subviews) {
+        [view removeFromSuperview];
+    }
+    [self buildFrames];
 }
 
 -(void)buildFrames{
@@ -69,6 +43,7 @@
     _frameYOffset = ViewYOffset;
     self.pagingEnabled = YES;
     self.delegate = self;
+    self.bounces = NO;
     self.frames = [NSMutableArray array];
     
     CGMutablePathRef path = CGPathCreateMutable(); //2
@@ -96,7 +71,7 @@
         content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height) ;
         
 		//set the column view contents and add it as subview
-        [self attachImagesWithFrame:frame inColumnView:content];
+        if([self.images count] > 0) [self attachImagesWithFrame:frame inColumnView:content];
         [content setPostFrame:(__bridge id)frame];  //6   
         [self.frames addObject: (__bridge id)frame];
         [self addSubview: content];
@@ -106,6 +81,7 @@
         
         //CFRelease(frame);
         CFRelease(path);
+        CFRelease(frame);
         
         columnIndex++;
     }
@@ -113,7 +89,6 @@
     //set the total width of the scroll view
     int totalPages = (columnIndex+1) / 2; //7
     self.contentSize = CGSizeMake(totalPages*self.bounds.size.width, textFrame.size.height);
-    
 }
 
 -(void)attachImagesWithFrame:(CTFrameRef)f inColumnView:(PostColumnView*)col
@@ -181,15 +156,6 @@
         }
         lineIndex++;
     }
-}
-
-
--(void)updateFrames{
-	self.frames = nil;
-    for (UIView *view in self.subviews) {
-        [view removeFromSuperview];
-    }
-    [self buildFrames];
 }
 
 

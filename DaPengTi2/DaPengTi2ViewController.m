@@ -40,7 +40,16 @@
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-	[(PostView*)self.view updateFrames]; 
+    for (UIView *view in self.view.subviews) {
+        [view removeFromSuperview];
+    }
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"txt"];
+    NSString* text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    MarkupParser* p = [[MarkupParser alloc] init];
+    NSAttributedString* attString = [p attrStringFromMarkup: text];
+	[(PostView *)[self view] setAttString:attString withImages: p.images];
+    [(PostView *)[self view] buildFrames];
 }
 
 @end

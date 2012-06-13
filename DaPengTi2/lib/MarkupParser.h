@@ -11,6 +11,7 @@
 
 @interface MarkupParser : NSObject
 @property (strong, nonatomic) NSString* font;
+@property(assign,nonatomic) CGFloat fontSize;
 @property (strong, nonatomic) UIColor* color;
 @property (strong, nonatomic) UIColor* strokeColor;
 @property (assign, readwrite) float strokeWidth;
