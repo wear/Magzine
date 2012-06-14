@@ -9,27 +9,61 @@
 #import "DaPengTi2ViewController.h"
 #import "MarkupParser.h"
 #import "PostView.h"
+#import "Post.h"
 
 @interface DaPengTi2ViewController ()
 
 @end
 
 @implementation DaPengTi2ViewController
+@synthesize postView;
+@synthesize toolbar;
+@synthesize post = _post;
+@synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+
+// Puts the splitViewBarButton in our toolbar (and/or removes the old one).
+// Must be called when our splitViewBarButtonItem property changes
+//  (and also after our view has been loaded from the storyboard (viewDidLoad)).
+
+- (void)handleSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
+{
+    NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+    if (_splitViewBarButtonItem) [toolbarItems removeObject:_splitViewBarButtonItem];
+    if (splitViewBarButtonItem) [toolbarItems insertObject:splitViewBarButtonItem atIndex:0];
+    self.toolbar.items = toolbarItems;
+    _splitViewBarButtonItem = splitViewBarButtonItem;
+}
+
+- (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
+{
+    if (splitViewBarButtonItem != _splitViewBarButtonItem) {
+        [self handleSplitViewBarButtonItem:splitViewBarButtonItem];
+    }
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"txt"];
-    NSString* text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-    MarkupParser* p = [[MarkupParser alloc] init];
-    NSAttributedString* attString = [p attrStringFromMarkup: text];
-	[(PostView *)[self view] setAttString:attString withImages: p.images];
-    [(PostView *)[self view] buildFrames];
+}
+
+-(void)updatePostViewForPost:(Post*)post{
+	if (!_post || [post.postId integerValue] != [_post.postId integerValue]) {
+        for (UIView *view in self.postView.subviews) {
+            [view removeFromSuperview];
+        }
+        self.post = post;
+        
+        MarkupParser* p = [[MarkupParser alloc] init];
+        NSAttributedString* attString = [p attrStringFromMarkup:post.content];
+        [self.postView setAttString:attString withImages: p.images];
+        [self.postView buildFrames];
+    }
 }
 
 - (void)viewDidUnload
 {
+    [self setPostView:nil];
+    [self setToolbar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
@@ -40,16 +74,16 @@
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    for (UIView *view in self.view.subviews) {
-        [view removeFromSuperview];
-    }
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"txt"];
-    NSString* text = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
-    MarkupParser* p = [[MarkupParser alloc] init];
-    NSAttributedString* attString = [p attrStringFromMarkup: text];
-	[(PostView *)[self view] setAttString:attString withImages: p.images];
-    [(PostView *)[self view] buildFrames];
+    if(self.post){
+        for (UIView *view in self.postView.subviews) {
+            [view removeFromSuperview];
+        }
+        
+        MarkupParser* p = [[MarkupParser alloc] init];
+        NSAttributedString* attString = [p attrStringFromMarkup:self.post.content];
+        [self.postView setAttString:attString withImages: p.images];
+        [self.postView buildFrames];
+    }	
 }
 
 @end

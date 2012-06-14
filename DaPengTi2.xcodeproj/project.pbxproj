@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D809DA7015887B9A00051787 /* PostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D809DA6F15887B9A00051787 /* PostTableViewController.m */; };
+		D809DA78158882D100051787 /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D809DA77158882D100051787 /* PostCell.m */; };
 		D8279CAD1585E3170084C8AA /* PostColumnVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = D8279CAC1585E3170084C8AA /* PostColumnVIew.m */; };
 		D8279CB3158618AE0084C8AA /* xkily.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8279CB2158618AE0084C8AA /* xkily.jpg */; };
+		D832B9FE15899A7B00B0301C /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = D832B9FD15899A7B00B0301C /* ReadMe */; };
 		D8497E1B1585C4E400426273 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1A1585C4E400426273 /* UIKit.framework */; };
 		D8497E1D1585C4E400426273 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1C1585C4E400426273 /* Foundation.framework */; };
 		D8497E1F1585C4E400426273 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1E1585C4E400426273 /* CoreGraphics.framework */; };
@@ -25,14 +28,20 @@
 		D8497E461585C84600426273 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = D8497E451585C84600426273 /* test.txt */; };
 		D8497E4A1585C88300426273 /* PostView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E491585C88300426273 /* PostView.m */; };
 		D8497E511585CA5200426273 /* MarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E501585CA5200426273 /* MarkupParser.m */; };
+		D8887B5815883E1000BD0083 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = D8887B5715883E1000BD0083 /* Post.m */; };
 		D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */; };
 		D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D809DA6E15887B9A00051787 /* PostTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostTableViewController.h; sourceTree = "<group>"; };
+		D809DA6F15887B9A00051787 /* PostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableViewController.m; sourceTree = "<group>"; };
+		D809DA76158882D100051787 /* PostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostCell.h; path = Views/PostCell.h; sourceTree = "<group>"; };
+		D809DA77158882D100051787 /* PostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostCell.m; path = Views/PostCell.m; sourceTree = "<group>"; };
 		D8279CAB1585E3170084C8AA /* PostColumnVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostColumnVIew.h; sourceTree = "<group>"; };
 		D8279CAC1585E3170084C8AA /* PostColumnVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostColumnVIew.m; sourceTree = "<group>"; };
 		D8279CB2158618AE0084C8AA /* xkily.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = xkily.jpg; path = Resources/xkily.jpg; sourceTree = "<group>"; };
+		D832B9FD15899A7B00B0301C /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
 		D8497E161585C4E400426273 /* DaPengTi2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaPengTi2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8497E1A1585C4E400426273 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D8497E1C1585C4E400426273 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -58,6 +67,8 @@
 		D8497E491585C88300426273 /* PostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostView.m; sourceTree = "<group>"; };
 		D8497E4F1585CA5200426273 /* MarkupParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkupParser.h; path = lib/MarkupParser.h; sourceTree = "<group>"; };
 		D8497E501585CA5200426273 /* MarkupParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkupParser.m; path = lib/MarkupParser.m; sourceTree = "<group>"; };
+		D8887B5615883E1000BD0083 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = Model/Post.h; sourceTree = "<group>"; };
+		D8887B5715883E1000BD0083 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = Model/Post.m; sourceTree = "<group>"; };
 		D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941222622892.jpg; path = Resources/133941222622892.jpg; sourceTree = "<group>"; };
 		D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941243718342.jpg; path = Resources/133941243718342.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +121,7 @@
 		D8497E201585C4E400426273 /* DaPengTi2 */ = {
 			isa = PBXGroup;
 			children = (
+				D8887B5415883DE600BD0083 /* Model */,
 				D8497E471585C86A00426273 /* Views */,
 				D8497E441585C80B00426273 /* Resources */,
 				D8497E371585C57D00426273 /* lib */,
@@ -118,7 +130,10 @@
 				D8497E501585CA5200426273 /* MarkupParser.m */,
 				D8497E2F1585C4E500426273 /* DaPengTi2ViewController.h */,
 				D8497E301585C4E500426273 /* DaPengTi2ViewController.m */,
+				D809DA6E15887B9A00051787 /* PostTableViewController.h */,
+				D809DA6F15887B9A00051787 /* PostTableViewController.m */,
 				D8497E211585C4E500426273 /* Supporting Files */,
+				D832B9FD15899A7B00B0301C /* ReadMe */,
 			);
 			path = DaPengTi2;
 			sourceTree = "<group>";
@@ -166,8 +181,19 @@
 				D8497E491585C88300426273 /* PostView.m */,
 				D8279CAB1585E3170084C8AA /* PostColumnVIew.h */,
 				D8279CAC1585E3170084C8AA /* PostColumnVIew.m */,
+				D809DA76158882D100051787 /* PostCell.h */,
+				D809DA77158882D100051787 /* PostCell.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		D8887B5415883DE600BD0083 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D8887B5615883E1000BD0083 /* Post.h */,
+				D8887B5715883E1000BD0083 /* Post.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,6 +254,7 @@
 				D8279CB3158618AE0084C8AA /* xkily.jpg in Resources */,
 				D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */,
 				D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */,
+				D832B9FE15899A7B00B0301C /* ReadMe in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +273,9 @@
 				D8497E4A1585C88300426273 /* PostView.m in Sources */,
 				D8497E511585CA5200426273 /* MarkupParser.m in Sources */,
 				D8279CAD1585E3170084C8AA /* PostColumnVIew.m in Sources */,
+				D8887B5815883E1000BD0083 /* Post.m in Sources */,
+				D809DA7015887B9A00051787 /* PostTableViewController.m in Sources */,
+				D809DA78158882D100051787 /* PostCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

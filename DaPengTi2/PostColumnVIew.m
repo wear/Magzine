@@ -36,7 +36,7 @@
     CGContextScaleCTM(context, 1.0, -1.0);
 
     CTFrameDraw((__bridge CTFrameRef)self.postFrame, context);
-
+	
     for (NSArray* imageData in self.images) {
         UIImage* img = [imageData objectAtIndex:0];
         CGRect imgBounds = CGRectFromString([imageData objectAtIndex:1]);

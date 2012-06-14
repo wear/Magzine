@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PostView;
+@class Post;
 
-@interface DaPengTi2ViewController : UIViewController
-
+@interface DaPengTi2ViewController : UIViewController 
+@property (weak, nonatomic) IBOutlet PostView *postView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (nonatomic, strong) UIBarButtonItem *splitViewBarButtonItem;
+@property(strong,nonatomic) Post* post;
+-(void)updatePostViewForPost:(Post*)post;
 @end

@@ -46,11 +46,11 @@
     self.bounces = NO;
     self.frames = [NSMutableArray array];
     
-    CGMutablePathRef path = CGPathCreateMutable(); //2
+    CGMutablePathRef textPath = CGPathCreateMutable(); //2
     CGRect textFrame = CGRectInset(self.bounds, _frameXOffset, _frameYOffset);
-    CGPathAddRect(path, NULL, textFrame );
+    CGPathAddRect(textPath, NULL, textFrame);
 
-    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)_attString);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.attString);
     
     int textPos = 0; //3
     int columnIndex = 0;
@@ -72,6 +72,7 @@
         
 		//set the column view contents and add it as subview
         if([self.images count] > 0) [self attachImagesWithFrame:frame inColumnView:content];
+        
         [content setPostFrame:(__bridge id)frame];  //6   
         [self.frames addObject: (__bridge id)frame];
         [self addSubview: content];
@@ -80,7 +81,7 @@
         textPos += frameRange.length;
         
         //CFRelease(frame);
-        CFRelease(path);
+		CGPathRelease(path);
         CFRelease(frame);
         
         columnIndex++;
@@ -89,6 +90,8 @@
     //set the total width of the scroll view
     int totalPages = (columnIndex+1) / 2; //7
     self.contentSize = CGSizeMake(totalPages*self.bounds.size.width, textFrame.size.height);
+	CFRelease(textPath);
+    CFRelease(framesetter);
 }
 
 -(void)attachImagesWithFrame:(CTFrameRef)f inColumnView:(PostColumnView*)col
@@ -120,7 +123,6 @@
         for (id runObj in (__bridge NSArray *)CTLineGetGlyphRuns(line)) { //6
             CTRunRef run = (__bridge CTRunRef)runObj;
             CFRange runRange = CTRunGetStringRange(run);
-            
             if ( runRange.location <= imgLocation && runRange.location+runRange.length > imgLocation ) { //7
 
 	            CGRect runBounds;
@@ -133,17 +135,18 @@
 	            runBounds.origin.x = origins[lineIndex].x + self.frame.origin.x + xOffset + _frameXOffset;
 	            runBounds.origin.y = origins[lineIndex].y + self.frame.origin.y + _frameYOffset;
 	            runBounds.origin.y -= descent;
+                
+                NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+                path = [path stringByAppendingPathComponent:[nextImage objectForKey:@"alt"]];
 
-                UIImage *img = [UIImage imageNamed:[nextImage objectForKey:@"src"] ];
+                UIImage *img = [UIImage imageWithContentsOfFile:path];
 
                 CGPathRef pathRef = CTFrameGetPath(f); //10
                 CGRect colRect = CGPathGetBoundingBox(pathRef);
                 
                 CGRect imgBounds = CGRectOffset(runBounds, colRect.origin.x - _frameXOffset - self.contentOffset.x, colRect.origin.y - _frameYOffset - self.frame.origin.y);
 
-                [col.images addObject: //11
-                 [NSArray arrayWithObjects:img, NSStringFromCGRect(imgBounds) , nil]
-                 ]; 
+                [col.images addObject: [NSArray arrayWithObjects:img, NSStringFromCGRect(imgBounds) , nil]]; 
 
                 //load the next image //12
                 imgIndex++;
