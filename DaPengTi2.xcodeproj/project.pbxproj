@@ -12,6 +12,8 @@
 		D8279CAD1585E3170084C8AA /* PostColumnVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = D8279CAC1585E3170084C8AA /* PostColumnVIew.m */; };
 		D8279CB3158618AE0084C8AA /* xkily.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8279CB2158618AE0084C8AA /* xkily.jpg */; };
 		D832B9FE15899A7B00B0301C /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = D832B9FD15899A7B00B0301C /* ReadMe */; };
+		D8438143158AD995004A28C1 /* FZZhunYuan-M02T.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8438142158AD995004A28C1 /* FZZhunYuan-M02T.ttf */; };
+		D8438145158ADB60004A28C1 /* STZHONGS.TTF in Resources */ = {isa = PBXBuildFile; fileRef = D8438144158ADB60004A28C1 /* STZHONGS.TTF */; };
 		D8497E1B1585C4E400426273 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1A1585C4E400426273 /* UIKit.framework */; };
 		D8497E1D1585C4E400426273 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1C1585C4E400426273 /* Foundation.framework */; };
 		D8497E1F1585C4E400426273 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8497E1E1585C4E400426273 /* CoreGraphics.framework */; };
@@ -42,6 +44,8 @@
 		D8279CAC1585E3170084C8AA /* PostColumnVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostColumnVIew.m; sourceTree = "<group>"; };
 		D8279CB2158618AE0084C8AA /* xkily.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = xkily.jpg; path = Resources/xkily.jpg; sourceTree = "<group>"; };
 		D832B9FD15899A7B00B0301C /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe; sourceTree = "<group>"; };
+		D8438142158AD995004A28C1 /* FZZhunYuan-M02T.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FZZhunYuan-M02T.ttf"; path = "Resources/FZZhunYuan-M02T.ttf"; sourceTree = "<group>"; };
+		D8438144158ADB60004A28C1 /* STZHONGS.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; name = STZHONGS.TTF; path = Resources/STZHONGS.TTF; sourceTree = "<group>"; };
 		D8497E161585C4E400426273 /* DaPengTi2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaPengTi2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8497E1A1585C4E400426273 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D8497E1C1585C4E400426273 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -166,6 +170,8 @@
 		D8497E441585C80B00426273 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D8438144158ADB60004A28C1 /* STZHONGS.TTF */,
+				D8438142158AD995004A28C1 /* FZZhunYuan-M02T.ttf */,
 				D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */,
 				D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */,
 				D8279CB2158618AE0084C8AA /* xkily.jpg */,
@@ -255,6 +261,8 @@
 				D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */,
 				D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */,
 				D832B9FE15899A7B00B0301C /* ReadMe in Resources */,
+				D8438143158AD995004A28C1 /* FZZhunYuan-M02T.ttf in Resources */,
+				D8438145158ADB60004A28C1 /* STZHONGS.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

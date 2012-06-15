@@ -33,7 +33,7 @@ static CGFloat widthCallback( void* ref ){
 {
     self = [super init];
     if (self) {
-        self.font = @"STHeitiTC-Light";
+        self.font = @"STZhongsong";
         self.color = [UIColor blackColor];
         self.strokeColor = [UIColor whiteColor];
         self.strokeWidth = 0.0;
@@ -157,6 +157,17 @@ static CGFloat widthCallback( void* ref ){
                                    nil];
             if (currentNodeContent) [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[currentNodeContent stringByAppendingString:@"\r\r"] attributes:attrs]];
             
+            // 小标题
+            for (HTMLNode *strongNode in [currentNode findChildTags:@"strong"]) {
+                CTFontRef strongFontRef = CTFontCreateWithName((__bridge CFStringRef)@"STHeitiSC-Medium",
+                                                    21., NULL);
+            	NSMutableDictionary *mutAttrs = [[NSMutableDictionary alloc] init];
+            	[mutAttrs setDictionary:attrs];
+                [mutAttrs setValue:(__bridge id)strongFontRef forKey:(NSString *)kCTFontAttributeName];
+                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[[strongNode contents] stringByAppendingString:@"\r\r"] attributes:mutAttrs]];
+            }
+            
+            // 图片
 			for(HTMLNode *imgNode in [currentNode findChildTags:@"img"]){
                 NSDictionary* imginfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                          [imgNode getAttributeNamed:@"width"], @"width",

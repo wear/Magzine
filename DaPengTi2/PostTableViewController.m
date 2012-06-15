@@ -12,7 +12,7 @@
 #import "PostCell.h"
 #import "HTMLNode.h"
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) 
-#define kSearchURL @"http://192.168.1.103:3000" 
+#define kSearchURL @"http://localhost:3000" 
 
 @interface PostTableViewController ()
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
