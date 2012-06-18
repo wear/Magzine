@@ -7,19 +7,44 @@
 //
 
 #import "DaPengTi2ViewController.h"
-#import "MarkupParser.h"
 #import "PostView.h"
 #import "Post.h"
+#import "MarkupParser.h"
 
-@interface DaPengTi2ViewController ()
+@interface DaPengTi2ViewController () <UIScrollViewDelegate>
+@property(strong,nonatomic) NSArray* postList;
 
+- (void)tilePosts;
+- (void)configurePost:(PostView *)page forIndex:(NSUInteger)index;
 @end
 
 @implementation DaPengTi2ViewController
-@synthesize postView;
+@synthesize pagingScrollView = _pagingScrollView;
 @synthesize toolbar;
 @synthesize post = _post;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+@synthesize recycledPages = _recycledPages;
+@synthesize visiblePages = _visiblePages;
+@synthesize postList = _postList;
+
+
+-(void)loadPosts:(NSArray *)posts{
+    self.postList = posts;
+    _pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
+                                               self.pagingScrollView.bounds.size.height); 
+    [self tilePosts];
+//    for (int i=0;i<5;i++) {
+//        Post* post= [posts objectAtIndex:i];
+//        PostView* postView = [[PostView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//        MarkupParser *parser = [[MarkupParser alloc] init];
+//        NSAttributedString* attString = [parser attrStringFromMarkupForPost:post];
+//        [postView setAttString:attString withImages:parser.images];
+//        [postView buildFrames];
+//        
+//        [self configurePost:postView forIndex:i];
+//        [self.view addSubview:postView];
+//    }
+}
 
 // Puts the splitViewBarButton in our toolbar (and/or removes the old one).
 // Must be called when our splitViewBarButtonItem property changes
@@ -44,25 +69,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-}
+    
+    CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
+    _pagingScrollView = [[UIScrollView alloc] initWithFrame:pagingScrollViewFrame];
+    _pagingScrollView.pagingEnabled = YES;
+    _pagingScrollView.backgroundColor = [UIColor whiteColor];
+    _pagingScrollView.showsVerticalScrollIndicator = NO;
+    _pagingScrollView.showsHorizontalScrollIndicator = NO;
 
--(void)updatePostViewForPost:(Post*)post{
-	if (!_post || [post.postId integerValue] != [_post.postId integerValue]) {
-        for (UIView *view in self.postView.subviews) {
-            [view removeFromSuperview];
-        }
-        self.post = post;
-        
-        MarkupParser* p = [[MarkupParser alloc] init];
-        NSAttributedString* attString = [p attrStringFromMarkup:post.content];
-        [self.postView setAttString:attString withImages: p.images];
-        [self.postView buildFrames];
-    }
+    _pagingScrollView.delegate = self;
+    self.view = _pagingScrollView;
+    
+    // Step 2: prepare to tile content
+    self.recycledPages = [[NSMutableSet alloc] init];
+    self.visiblePages  = [[NSMutableSet alloc] init];
+
+    _pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
+                                               self.pagingScrollView.bounds.size.height); 
 }
 
 - (void)viewDidUnload
 {
-    [self setPostView:nil];
     [self setToolbar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -74,16 +101,112 @@
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    if(self.post){
-        for (UIView *view in self.postView.subviews) {
-            [view removeFromSuperview];
-        }
+//    if(self.post){
+//        for (UIView *view in self.postView.subviews) {
+//            [view removeFromSuperview];
+//        }
+//        
+//        MarkupParser* p = [[MarkupParser alloc] init];
+//        NSAttributedString* attString = [p attrStringFromMarkup:self.post.content];
+//        [self.postView setAttString:attString withImages: p.images];
+//        [self.postView buildFrames];
+//    }	
+}
+
+
+- (void)configurePost:(PostView *)page forIndex:(NSUInteger)index
+{
+    page.index = index;
+    page.frame = [self frameForPostAtIndex:index];
         
-        MarkupParser* p = [[MarkupParser alloc] init];
-        NSAttributedString* attString = [p attrStringFromMarkup:self.post.content];
-        [self.postView setAttString:attString withImages: p.images];
-        [self.postView buildFrames];
-    }	
+    // Use tiled images
+    [page displayTiledPost:[self.postList objectAtIndex:index]];
+}
+
+#pragma mark -
+#pragma mark Tiling and page configuration
+
+- (void)tilePosts
+{
+    // Calculate which pages are visible
+    CGRect visibleBounds = _pagingScrollView.bounds;
+    int firstNeededPageIndex = floorf(CGRectGetMinX(visibleBounds) / CGRectGetWidth(visibleBounds));
+    int lastNeededPageIndex  = floorf((CGRectGetMaxX(visibleBounds)-1) / CGRectGetWidth(visibleBounds));
+    firstNeededPageIndex = MAX(firstNeededPageIndex, 0);
+    lastNeededPageIndex  = MIN(lastNeededPageIndex, [self.postList count] - 1);
+    // Recycle no-longer-visible pages 
+    for (PostView *postView in self.visiblePages) {
+        if (postView.index < firstNeededPageIndex || postView.index > lastNeededPageIndex) {
+            [self.recycledPages addObject:postView];
+            [postView removeFromSuperview];
+        }
+    }
+    [self.visiblePages minusSet:self.recycledPages];
+    
+    // add missing pages
+    for (int index = firstNeededPageIndex; index <= lastNeededPageIndex; index++) {
+        if (![self isDisplayingPageForIndex:index]) {
+            PostView *page = [self dequeueRecycledPage];
+            if (page == nil) {
+                page = [[PostView alloc] init];
+            }
+            [self configurePost:page forIndex:index];
+            [_pagingScrollView addSubview:page];
+            [_visiblePages addObject:page];
+        }
+    }    
+}
+
+- (PostView *)dequeueRecycledPage
+{
+    PostView *page = [_recycledPages anyObject];
+    if (page) {
+//        [[page retain] autorelease];
+        [_recycledPages removeObject:page];
+    }
+    return page;
+}
+
+- (BOOL)isDisplayingPageForIndex:(NSUInteger)index
+{
+    BOOL foundPage = NO;
+    for (PostView *page in _visiblePages) {
+        if (page.index == index) {
+            foundPage = YES;
+            break;
+        }
+    }
+    return foundPage;
+}
+
+
+
+#pragma mark -
+#pragma mark  Frame calculations
+#define PADDING  10
+
+- (CGRect)frameForPagingScrollView {
+    CGRect frame = [[UIScreen mainScreen] bounds];
+    frame.origin.x -= PADDING;
+    frame.size.width += (2 * PADDING);
+    return frame;
+}
+
+- (CGRect)frameForPostAtIndex:(NSUInteger)index {
+//    CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
+    
+    CGRect postFrame = [[UIScreen mainScreen] bounds];
+//    postFrame.size.width -= (2 * PADDING);
+    postFrame.origin.x = [[UIScreen mainScreen] bounds].size.width * index ;
+    return postFrame;
+}
+
+#pragma mark -
+#pragma mark ScrollView delegate methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self tilePosts];
 }
 
 @end

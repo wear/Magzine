@@ -9,18 +9,29 @@
 #import "PostView.h"
 #import "PostColumnVIew.h"
 #import <CoreText/CoreText.h>
-#define ViewXOffset 40
-#define ViewYOffset 40
-#define FrameXOffset 40
-#define FrameYOffset 40
-#define FrameSplitOffset 30
+#import "MarkupParser.h"
+#import "Post.h"
+#define FrameXOffset 60
+#define FrameYOffset 60
+#define FrameSplitOffset 10
+
+@interface PostView() 
+@property(strong,nonatomic) MarkupParser* parser;
+@end
 
 @implementation PostView
 @synthesize attString = _attString;
-@synthesize frameXOffset = _frameXOffset;
-@synthesize frameYOffset = _frameYOffset;
 @synthesize frames = _frames;
 @synthesize images = _images;
+@synthesize index;
+@synthesize parser = _parser;
+
+-(MarkupParser*)parser{
+    if (!_parser) {
+        _parser = [[MarkupParser alloc] init];
+    }
+    return _parser;
+}
 
 -(void)setAttString:(NSAttributedString *)string withImages:(NSArray*)imgs
 {
@@ -28,26 +39,24 @@
     self.images = imgs;
 }
 
--(void)updateFrames{
-	self.frames = nil;
-    self.images = nil;
-    for (UIView *view in self.subviews) {
+-(void)displayTiledPost:(Post*)post{
+	for (UIView* view in self.subviews) {
         [view removeFromSuperview];
     }
+    NSAttributedString* attString = [self.parser attrStringFromMarkupForPost:post];
+    [self setAttString:attString withImages: self.parser.images];
     [self buildFrames];
+    [self.parser.images removeAllObjects];
 }
 
 -(void)buildFrames{
-
-    _frameXOffset = ViewXOffset; //1
-    _frameYOffset = ViewYOffset;
     self.pagingEnabled = YES;
     self.delegate = self;
     self.bounces = NO;
     self.frames = [NSMutableArray array];
     
     CGMutablePathRef textPath = CGPathCreateMutable(); //2
-    CGRect textFrame = CGRectInset(self.bounds, _frameXOffset, _frameYOffset);
+    CGRect textFrame = CGRectInset(self.frame, FrameXOffset, FrameYOffset);
     CGPathAddRect(textPath, NULL, textFrame);
 
     CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.attString);
@@ -56,8 +65,9 @@
     int columnIndex = 0;
     
     while (textPos < [_attString length]) { //4
-        CGPoint colOffset = CGPointMake( (columnIndex+1)*_frameXOffset + columnIndex*(textFrame.size.width/2), FrameYOffset );
-        CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/2-FrameSplitOffset, textFrame.size.height);
+        CGPoint colOffset = CGPointMake( (columnIndex+1)*FrameXOffset-(columnIndex%2==0 ? 0 :1)*FrameXOffset/2 + columnIndex*(textFrame.size.width/2), FrameYOffset );
+        //如果是双数col就双倍offset
+        CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/2-FrameXOffset/2, textFrame.size.height);
         
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathAddRect(path, NULL, colRect);
@@ -73,7 +83,7 @@
 		//set the column view contents and add it as subview
         if([self.images count] > 0) [self attachImagesWithFrame:frame inColumnView:content];
         
-        [content setPostFrame:(__bridge id)frame];  //6   
+        [content setPostFrame:(__bridge_transfer id)frame];  //6   
         [self.frames addObject: (__bridge id)frame];
         [self addSubview: content];
         
@@ -82,7 +92,6 @@
         
         //CFRelease(frame);
 		CGPathRelease(path);
-        CFRelease(frame);
         
         columnIndex++;
     }
@@ -132,8 +141,8 @@
 	            runBounds.size.height = ascent + descent;
 
 	            CGFloat xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL); //9
-	            runBounds.origin.x = origins[lineIndex].x + self.frame.origin.x + xOffset + _frameXOffset;
-	            runBounds.origin.y = origins[lineIndex].y + self.frame.origin.y + _frameYOffset;
+	            runBounds.origin.x = origins[lineIndex].x + self.frame.origin.x + xOffset + FrameXOffset;
+	            runBounds.origin.y = origins[lineIndex].y + self.frame.origin.y + FrameYOffset;
 	            runBounds.origin.y -= descent;
                 
                 NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -143,10 +152,9 @@
 
                 CGPathRef pathRef = CTFrameGetPath(f); //10
                 CGRect colRect = CGPathGetBoundingBox(pathRef);
-                
-                CGRect imgBounds = CGRectOffset(runBounds, colRect.origin.x - _frameXOffset - self.contentOffset.x, colRect.origin.y - _frameYOffset - self.frame.origin.y);
+                CGRect imgBounds = CGRectOffset(runBounds, colRect.origin.x - FrameXOffset - self.contentOffset.x-[[UIScreen mainScreen] bounds].size.width*self.index, colRect.origin.y - FrameYOffset - self.frame.origin.y);
 
-                [col.images addObject: [NSArray arrayWithObjects:img, NSStringFromCGRect(imgBounds) , nil]]; 
+                [col.images addObject: [NSArray arrayWithObjects:img, NSStringFromCGRect(imgBounds) ,[NSNumber numberWithInteger:self.index], nil]]; 
 
                 //load the next image //12
                 imgIndex++;

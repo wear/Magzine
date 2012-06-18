@@ -12,6 +12,7 @@
 @synthesize title = _title;
 @synthesize content = _content;
 @synthesize postId = _postId;
+@synthesize layout = _layout;
 
 +(NSArray*)postsFromJSONDate:(NSData *)responseData{
     NSError* error;
@@ -35,6 +36,7 @@
     post.title = [postInfo valueForKey:@"title"];
     post.content = [postInfo valueForKey:@"content"];
     post.postId = [postInfo valueForKey:@"post_id"];
+    post.layout  = [postInfo valueForKey:@"layout"];
     return post;
 }
 

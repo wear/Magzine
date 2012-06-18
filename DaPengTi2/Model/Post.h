@@ -12,6 +12,7 @@
 @property(strong,nonatomic) NSString *title;
 @property(strong,nonatomic) NSString *content;
 @property(strong,nonatomic) NSNumber *postId;
+@property(strong,nonatomic) NSString *layout;
 
 +(NSArray*)postsFromJSONDate:(NSData *)responseData;
 @end

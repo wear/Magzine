@@ -8,6 +8,7 @@
 
 #import "MarkupParser.h"
 #import "HTMLParser.h"
+#import "Post.h"
 #import <CoreText/CoreText.h>
 
 /* Callbacks */
@@ -27,7 +28,7 @@ static CGFloat widthCallback( void* ref ){
 @implementation MarkupParser
 @synthesize font, color, strokeColor, strokeWidth;
 @synthesize fontSize;
-@synthesize images;
+@synthesize images = _images;
 
 -(id)init
 {
@@ -45,14 +46,14 @@ static CGFloat widthCallback( void* ref ){
 
 
 // 构建node tree,默认全部内容放在class为entry-content的div中
-// 所有段落被p标签包含,h元素除外
--(NSAttributedString*)attrStringFromMarkup:(NSString*)markup
+// 所有段落被p标签包含
+-(NSAttributedString*)attrStringFromMarkupForPost:(Post*)post
 {
 	//初始化内容
 	NSMutableAttributedString* aString = [[NSMutableAttributedString alloc] initWithString:@""]; 
     NSError *error = nil;
     
-    HTMLParser *parser = [[HTMLParser alloc] initWithString:markup error:&error];
+    HTMLParser *parser = [[HTMLParser alloc] initWithString:post.content error:&error];
     
     if (error) {
         NSLog(@"Error: %@", error);
@@ -64,6 +65,45 @@ static CGFloat widthCallback( void* ref ){
     int nodeCount = 0;
     NSArray* entryNodes = [bodyNode children];
     
+    //开始设置默认样式
+    //字体
+    CTFontRef fontRef = CTFontCreateWithName((__bridge CFStringRef)self.font,
+                                             self.fontSize, NULL);
+    
+    //設定對齊方式
+    CTTextAlignment alignment = kCTJustifiedTextAlignment;
+    CTParagraphStyleSetting alignmentStyle;
+    alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;
+    alignmentStyle.valueSize=sizeof(alignment);
+    alignmentStyle.value=&alignment;
+    
+    //設定行高
+    CGFloat lineSpace1= 32;
+    CTParagraphStyleSetting lineSpaceStyle1;
+    lineSpaceStyle1.spec=kCTParagraphStyleSpecifierMinimumLineHeight;
+    lineSpaceStyle1.valueSize=sizeof(lineSpace1);
+    lineSpaceStyle1.value=&lineSpace1;
+    
+    //换行模式
+    CTLineBreakMode lineBreakMode = kCTLineBreakByWordWrapping;
+    CTParagraphStyleSetting lineBreak;
+    lineBreak.spec = kCTParagraphStyleSpecifierLineBreakMode;
+    lineBreak.valueSize = sizeof(lineBreakMode);
+    lineBreak.value = &lineBreakMode;
+    
+    CTParagraphStyleSetting settings[3]={
+        alignmentStyle,lineSpaceStyle1,lineBreak
+    };
+    
+    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(settings, sizeof(settings));
+    
+    NSDictionary* attrs = [NSDictionary dictionaryWithObjectsAndKeys:
+                           (id)self.color.CGColor, kCTForegroundColorAttributeName,
+                           (__bridge_transfer id)fontRef, kCTFontAttributeName,
+                           (id)self.strokeColor.CGColor, (NSString *)kCTStrokeColorAttributeName,
+                           (__bridge_transfer id)paragraphStyle,(id)kCTParagraphStyleAttributeName,
+                           (id)[NSNumber numberWithFloat: self.strokeWidth], (NSString *)kCTStrokeWidthAttributeName,
+                           nil];
     
     // 顺序解析标签
     while ([entryNodes count] > nodeCount) {
@@ -71,90 +111,48 @@ static CGFloat widthCallback( void* ref ){
         HTMLNode* currentNode = [entryNodes objectAtIndex:nodeCount];
         NSString *currentNodeContent = [currentNode contents];
         
-//        if ([[currentNode tagName] isEqualToString:@"h1"]) {    
-//            NSMutableDictionary *mutAttrs = [[NSMutableDictionary alloc] init];
-//            [mutAttrs setDictionary:attrs];
-//            CTFontRef h1FontRef = CTFontCreateWithName((__bridge CFStringRef)@"STHeitiSC-Medium",
-//                                                     36., NULL);
-//            //設定行高
-//            CGFloat lineSpaceh1= 32;
-//            CTParagraphStyleSetting lineSpaceStyleh1;
-//            lineSpaceStyleh1.spec=kCTParagraphStyleSpecifierMinimumLineHeight;
-//            lineSpaceStyleh1.valueSize=sizeof(lineSpaceh1);
-//            lineSpaceStyleh1.value=&lineSpaceh1;
-//            
-//            CTParagraphStyleSetting h1settings[1]={
-//                lineSpaceStyleh1
-//            };
-//            CTParagraphStyleRef h1paragraphStyle = CTParagraphStyleCreate(h1settings, sizeof(h1settings));
-//            
-//            [mutAttrs setValue:(__bridge id)h1FontRef forKey:(NSString *)kCTFontAttributeName];
-//			[mutAttrs setValue:(__bridge id)h1paragraphStyle forKey:(id)kCTParagraphStyleAttributeName];
-//            
-//			attrs = [mutAttrs copy];
-//            
-//            NSString* source = [[[currentNode findChildTags:@"span"] objectAtIndex:0] contents];
-//            
-//            if (source) {
-//                //如果带源span,则仅换行
-//                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[currentNodeContent stringByAppendingString:@"\r"] attributes:attrs]];
-//                
-//                CTFontRef sourceSpanFontRef = CTFontCreateWithName((__bridge CFStringRef)self.font,
-//                                                           14., NULL);
-//                [mutAttrs setValue:(__bridge id)sourceSpanFontRef forKey:(NSString *)kCTFontAttributeName];
-//                [mutAttrs setValue:(__bridge id)[UIColor grayColor].CGColor forKey:(NSString *)kCTForegroundColorAttributeName];
-//                attrs = [mutAttrs copy];
-//                
-//                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:source attributes:attrs]];
-//                
-//                CFRelease(sourceSpanFontRef);
-//            } else {
-//                //如果不带源span,则成段落，段落默认双换行
-//                if (currentNodeContent) [aString appendAttributedString:[[NSAttributedString alloc] initWithString:currentNodeContent attributes:attrs]];
-//            }
-//            CFRelease(h1FontRef);
-//            CFRelease(h1paragraphStyle);
-//        }
+        if ([[currentNode tagName] isEqualToString:@"h1"]) {    
+            NSMutableDictionary *mutAttrs = [[NSMutableDictionary alloc] init];
+            [mutAttrs setDictionary:attrs];
+            CTFontRef h1FontRef = CTFontCreateWithName((__bridge CFStringRef)@"STHeitiSC-Medium",
+                                                     36., NULL);
+            //設定行高
+            CGFloat lineSpaceh1= 54;
+            CTParagraphStyleSetting lineSpaceStyleh1;
+            lineSpaceStyleh1.spec=kCTParagraphStyleSpecifierMinimumLineHeight;
+            lineSpaceStyleh1.valueSize=sizeof(lineSpaceh1);
+            lineSpaceStyleh1.value=&lineSpaceh1;
+            
+            CTParagraphStyleSetting h1settings[1]={
+                lineSpaceStyleh1
+            };
+            CTParagraphStyleRef h1paragraphStyle = CTParagraphStyleCreate(h1settings, sizeof(h1settings));
+            
+            [mutAttrs setValue:(__bridge_transfer id)h1FontRef forKey:(NSString *)kCTFontAttributeName];
+			[mutAttrs setValue:(__bridge_transfer id)h1paragraphStyle forKey:(id)kCTParagraphStyleAttributeName];
+            
+            NSArray* spanNodes = [currentNode findChildTags:@"span"];
+            
+            if ([spanNodes count] > 0) {
+                //如果带源span,则仅换行
+                NSString* source = [[spanNodes objectAtIndex:0] contents];
+                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[currentNodeContent stringByAppendingString:@"\r"] attributes:(NSDictionary*)mutAttrs]];
+                
+                CTFontRef sourceSpanFontRef = CTFontCreateWithName((__bridge CFStringRef)self.font,
+                                                           14., NULL);
+                [mutAttrs setValue:(__bridge_transfer id)sourceSpanFontRef forKey:(NSString *)kCTFontAttributeName];
+                [mutAttrs setValue:(id)[UIColor grayColor].CGColor forKey:(NSString *)kCTForegroundColorAttributeName];
+                
+                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[source stringByAppendingString:@"\r\r"] attributes:(NSDictionary*)mutAttrs]];
+                
+            } else {
+                //如果不带源span,则成段落，段落默认双换行
+                if (currentNodeContent) [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[currentNodeContent stringByAppendingString:@"\r\r"] attributes:(NSDictionary*)mutAttrs]];
+            }
+        }
 
         if ([[currentNode tagName] isEqualToString:@"p"]) {
-            //开始样式设置
-            CTFontRef fontRef = CTFontCreateWithName((__bridge CFStringRef)self.font,
-                                                     self.fontSize, NULL);
             
-            //設定對齊方式
-            CTTextAlignment alignment = kCTJustifiedTextAlignment;
-            CTParagraphStyleSetting alignmentStyle;
-            alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;
-            alignmentStyle.valueSize=sizeof(alignment);
-            alignmentStyle.value=&alignment;
-            
-            //設定行高
-            CGFloat lineSpace1= 32;
-            CTParagraphStyleSetting lineSpaceStyle1;
-            lineSpaceStyle1.spec=kCTParagraphStyleSpecifierMinimumLineHeight;
-            lineSpaceStyle1.valueSize=sizeof(lineSpace1);
-            lineSpaceStyle1.value=&lineSpace1;
-            
-            //换行模式
-            CTLineBreakMode lineBreakMode = kCTLineBreakByWordWrapping;
-            CTParagraphStyleSetting lineBreak;
-            lineBreak.spec = kCTParagraphStyleSpecifierLineBreakMode;
-            lineBreak.valueSize = sizeof(lineBreakMode);
-            lineBreak.value = &lineBreakMode;
-            
-            CTParagraphStyleSetting settings[3]={
-                alignmentStyle,lineSpaceStyle1,lineBreak
-            };
-            
-            CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(settings, sizeof(settings));
-            
-            NSDictionary* attrs = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   (id)self.color.CGColor, kCTForegroundColorAttributeName,
-                                   (__bridge id)fontRef, kCTFontAttributeName,
-                                   (id)self.strokeColor.CGColor, (NSString *)kCTStrokeColorAttributeName,
-                                   (__bridge id)paragraphStyle,(id)kCTParagraphStyleAttributeName,
-                                   (id)[NSNumber numberWithFloat: self.strokeWidth], (NSString *)kCTStrokeWidthAttributeName,
-                                   nil];
             if (currentNodeContent) [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[currentNodeContent stringByAppendingString:@"\r\r"] attributes:attrs]];
             
 			for(HTMLNode *imgNode in [currentNode findChildTags:@"img"]){
@@ -164,6 +162,7 @@ static CGFloat widthCallback( void* ref ){
                                          [NSNumber numberWithInteger:[aString length]],@"location",
                                          [imgNode getAttributeNamed:@"src"],@"src",
                                          [imgNode getAttributeNamed:@"alt"],@"alt",
+                                         post.postId,@"postID",
                                          nil];
                 
                 [self.images addObject:imginfo];
@@ -190,15 +189,9 @@ static CGFloat widthCallback( void* ref ){
                 //add a space to the text so that it can call the delegate
                 [aString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:attrDictionaryDelegate]];
             }
-            CFRelease(fontRef);
-            CFRelease(paragraphStyle);
         }
         nodeCount += 1;
     }
-    
-//        CFRelease(paragraphStyle); 
-       
-
     return (NSAttributedString*)aString;
 }
 
