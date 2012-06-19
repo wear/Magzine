@@ -10,7 +10,7 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="00N-Dp-rVn" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="rMz-CU-r0L" customClass="DaPengTi2ViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="AGv-cr-wYs" customClass="PostView">
+                    <view key="view" contentMode="scaleToFill" id="AGv-cr-wYs">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -115,9 +115,6 @@
             <relationships>
                 <relationship kind="outlet" name="indicator" candidateClass="UIActivityIndicatorView"/>
             </relationships>
-        </class>
-        <class className="PostView" superclassName="UIScrollView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PostView.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

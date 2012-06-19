@@ -10,7 +10,7 @@
 @class PostView;
 @class Post;
 
-@interface DaPengTi2ViewController : UIViewController 
+@interface DaPengTi2ViewController : UIViewController <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, strong) UIBarButtonItem *splitViewBarButtonItem;
 @property(nonatomic,strong) UIScrollView* pagingScrollView;

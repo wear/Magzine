@@ -11,7 +11,7 @@
 #import "Post.h"
 #import "MarkupParser.h"
 
-@interface DaPengTi2ViewController () <UIScrollViewDelegate>
+@interface DaPengTi2ViewController () 
 @property(strong,nonatomic) NSArray* postList;
 
 - (void)tilePosts;
@@ -27,10 +27,9 @@
 @synthesize visiblePages = _visiblePages;
 @synthesize postList = _postList;
 
-
 -(void)loadPosts:(NSArray *)posts{
     self.postList = posts;
-    _pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
+    self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
                                                self.pagingScrollView.bounds.size.height); 
     [self tilePosts];
 //    for (int i=0;i<5;i++) {
@@ -66,25 +65,26 @@
     }
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+	[super viewWillAppear:animated];
+    CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
+    self.pagingScrollView = [[UIScrollView alloc] initWithFrame:pagingScrollViewFrame];
+    self.pagingScrollView.pagingEnabled = YES;
+    self.pagingScrollView.backgroundColor = [UIColor redColor];
+    self.pagingScrollView.showsVerticalScrollIndicator = NO;
+    self.pagingScrollView.showsHorizontalScrollIndicator = NO;
+    self.pagingScrollView.delegate = self;
+    [self.view addSubview:self.pagingScrollView];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
-    _pagingScrollView = [[UIScrollView alloc] initWithFrame:pagingScrollViewFrame];
-    _pagingScrollView.pagingEnabled = YES;
-    _pagingScrollView.backgroundColor = [UIColor whiteColor];
-    _pagingScrollView.showsVerticalScrollIndicator = NO;
-    _pagingScrollView.showsHorizontalScrollIndicator = NO;
-
-    _pagingScrollView.delegate = self;
-    self.view = _pagingScrollView;
-    
     // Step 2: prepare to tile content
     self.recycledPages = [[NSMutableSet alloc] init];
     self.visiblePages  = [[NSMutableSet alloc] init];
 
-    _pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
+    self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
                                                self.pagingScrollView.bounds.size.height); 
 }
 
@@ -117,7 +117,8 @@
 - (void)configurePost:(PostView *)page forIndex:(NSUInteger)index
 {
     page.index = index;
-    page.frame = [self frameForPostAtIndex:index];
+    page.frame = [self frameForPageAtIndex:index];
+    page.backgroundColor = [UIColor brownColor];
         
     // Use tiled images
     [page displayTiledPost:[self.postList objectAtIndex:index]];
@@ -151,8 +152,9 @@
                 page = [[PostView alloc] init];
             }
             [self configurePost:page forIndex:index];
-            [_pagingScrollView addSubview:page];
+            [self.pagingScrollView addSubview:page];
             [_visiblePages addObject:page];
+        } else {
         }
     }    
 }
@@ -192,13 +194,13 @@
     return frame;
 }
 
-- (CGRect)frameForPostAtIndex:(NSUInteger)index {
-//    CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
+- (CGRect)frameForPageAtIndex:(NSUInteger)index {
+    CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
     
-    CGRect postFrame = [[UIScreen mainScreen] bounds];
-//    postFrame.size.width -= (2 * PADDING);
-    postFrame.origin.x = [[UIScreen mainScreen] bounds].size.width * index ;
-    return postFrame;
+    CGRect pageFrame = pagingScrollViewFrame;
+    pageFrame.size.width -= (2 * PADDING);
+    pageFrame.origin.x = (pagingScrollViewFrame.size.width * index) + PADDING;
+    return pageFrame;
 }
 
 #pragma mark -

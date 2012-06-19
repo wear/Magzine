@@ -36,7 +36,8 @@
 -(void)setAttString:(NSAttributedString *)string withImages:(NSArray*)imgs
 {
     self.attString = string;
-    self.images = imgs;
+    [self.images removeAllObjects];
+    [self.images arrayByAddingObjectsFromArray:imgs];
 }
 
 -(void)displayTiledPost:(Post*)post{
@@ -46,7 +47,7 @@
     NSAttributedString* attString = [self.parser attrStringFromMarkupForPost:post];
     [self setAttString:attString withImages: self.parser.images];
     [self buildFrames];
-    [self.parser.images removeAllObjects];
+//    [self.parser.images removeAllObjects];
 }
 
 -(void)buildFrames{

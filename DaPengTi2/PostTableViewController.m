@@ -12,7 +12,7 @@
 #import "PostCell.h"
 #import "HTMLNode.h"
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) 
-#define kSearchURL @"http://localhost:3001" 
+#define kSearchURL @"http://localhost:3000" 
 
 @interface PostTableViewController ()
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
@@ -75,7 +75,6 @@
     self.indicator.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
     [self.indicator startAnimating];
 	[self getPostsFromServer];
-
 }
 
 -(void)getPostsFromServer{
