@@ -36,18 +36,20 @@
 -(void)setAttString:(NSAttributedString *)string withImages:(NSArray*)imgs
 {
     self.attString = string;
-    [self.images removeAllObjects];
-    [self.images arrayByAddingObjectsFromArray:imgs];
+	self.images = imgs;
 }
 
 -(void)displayTiledPost:(Post*)post{
+    // 重设colums和contentSize
 	for (UIView* view in self.subviews) {
         [view removeFromSuperview];
     }
+    self.contentSize = self.frame.size;
+    [self.parser.images removeAllObjects];
+    
     NSAttributedString* attString = [self.parser attrStringFromMarkupForPost:post];
     [self setAttString:attString withImages: self.parser.images];
     [self buildFrames];
-//    [self.parser.images removeAllObjects];
 }
 
 -(void)buildFrames{
@@ -82,7 +84,7 @@
         content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height) ;
         
 		//set the column view contents and add it as subview
-        if([self.images count] > 0) [self attachImagesWithFrame:frame inColumnView:content];
+        if([self.images count] > 0) [self attachImagesWithFrame:frame inColumnView:content atIndex:columnIndex];
         
         [content setPostFrame:(__bridge_transfer id)frame];  //6   
         [self.frames addObject: (__bridge id)frame];
@@ -104,7 +106,7 @@
     CFRelease(framesetter);
 }
 
--(void)attachImagesWithFrame:(CTFrameRef)f inColumnView:(PostColumnView*)col
+-(void)attachImagesWithFrame:(CTFrameRef)f inColumnView:(PostColumnView*)col atIndex:(NSUInteger)colIndex
 {
     //drawing images
     NSArray *lines = (__bridge NSArray *)CTFrameGetLines(f); //1
@@ -118,7 +120,6 @@
     
     //find images for the current column
     CFRange frameRange = CTFrameGetVisibleStringRange(f); //4
-//	NSLog(@"framelocation is %ld, img location is %d",frameRange.location,imgLocation);
     while ( imgLocation < frameRange.location ) {
         imgIndex++;
         if (imgIndex>=[self.images count]) return; //quit if no images for this column
@@ -145,7 +146,8 @@
 	            runBounds.origin.x = origins[lineIndex].x + self.frame.origin.x + xOffset + FrameXOffset;
 	            runBounds.origin.y = origins[lineIndex].y + self.frame.origin.y + FrameYOffset;
 	            runBounds.origin.y -= descent;
-                
+
+                // 如果没有图片怎么办？
                 NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
                 path = [path stringByAppendingPathComponent:[nextImage objectForKey:@"alt"]];
 
@@ -153,8 +155,9 @@
 
                 CGPathRef pathRef = CTFrameGetPath(f); //10
                 CGRect colRect = CGPathGetBoundingBox(pathRef);
-                CGRect imgBounds = CGRectOffset(runBounds, colRect.origin.x - FrameXOffset - self.contentOffset.x-[[UIScreen mainScreen] bounds].size.width*self.index, colRect.origin.y - FrameYOffset - self.frame.origin.y);
-
+                
+                CGRect imgBounds = CGRectOffset(runBounds, colRect.origin.x - 2*FrameXOffset - self.contentOffset.x-(self.frame.size.width+PagingScrollPadding)*self.index, colRect.origin.y - FrameYOffset - self.frame.origin.y);
+                NSLog(@"imgBounds　%@",NSStringFromCGRect(imgBounds));
                 [col.images addObject: [NSArray arrayWithObjects:img, NSStringFromCGRect(imgBounds) ,[NSNumber numberWithInteger:self.index], nil]]; 
 
                 //load the next image //12

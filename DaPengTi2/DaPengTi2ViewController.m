@@ -70,9 +70,9 @@
     CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
     self.pagingScrollView = [[UIScrollView alloc] initWithFrame:pagingScrollViewFrame];
     self.pagingScrollView.pagingEnabled = YES;
-    self.pagingScrollView.backgroundColor = [UIColor redColor];
     self.pagingScrollView.showsVerticalScrollIndicator = NO;
     self.pagingScrollView.showsHorizontalScrollIndicator = NO;
+    self.pagingScrollView.bounces = NO;
     self.pagingScrollView.delegate = self;
     [self.view addSubview:self.pagingScrollView];
 }
@@ -114,16 +114,6 @@
 }
 
 
-- (void)configurePost:(PostView *)page forIndex:(NSUInteger)index
-{
-    page.index = index;
-    page.frame = [self frameForPageAtIndex:index];
-    page.backgroundColor = [UIColor brownColor];
-        
-    // Use tiled images
-    [page displayTiledPost:[self.postList objectAtIndex:index]];
-}
-
 #pragma mark -
 #pragma mark Tiling and page configuration
 
@@ -154,9 +144,17 @@
             [self configurePost:page forIndex:index];
             [self.pagingScrollView addSubview:page];
             [_visiblePages addObject:page];
-        } else {
-        }
+        } 
     }    
+}
+
+- (void)configurePost:(PostView *)page forIndex:(NSUInteger)index
+{
+    page.index = index;
+    page.frame = [self frameForPageAtIndex:index];
+    
+    // Use tiled images
+    [page displayTiledPost:[self.postList objectAtIndex:index]];
 }
 
 - (PostView *)dequeueRecycledPage
@@ -185,12 +183,11 @@
 
 #pragma mark -
 #pragma mark  Frame calculations
-#define PADDING  10
 
 - (CGRect)frameForPagingScrollView {
     CGRect frame = [[UIScreen mainScreen] bounds];
-    frame.origin.x -= PADDING;
-    frame.size.width += (2 * PADDING);
+    frame.origin.x -= PagingScrollPadding;
+    frame.size.width += (2 * PagingScrollPadding);
     return frame;
 }
 
@@ -198,8 +195,8 @@
     CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
     
     CGRect pageFrame = pagingScrollViewFrame;
-    pageFrame.size.width -= (2 * PADDING);
-    pageFrame.origin.x = (pagingScrollViewFrame.size.width * index) + PADDING;
+    pageFrame.size.width -= (2 * PagingScrollPadding);
+    pageFrame.origin.x = (pagingScrollViewFrame.size.width * index) + PagingScrollPadding;
     return pageFrame;
 }
 
