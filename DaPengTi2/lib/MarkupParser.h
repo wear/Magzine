@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+@class Post;
 
 
 @interface MarkupParser : NSObject
@@ -18,5 +19,5 @@
 
 @property (strong, nonatomic) NSMutableArray* images;
 
--(NSAttributedString*)attrStringFromMarkup:(NSString*)html;
+-(NSAttributedString*)attrStringFromMarkupForPost:(Post*)post;
 @end

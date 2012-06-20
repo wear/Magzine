@@ -10,10 +10,13 @@
 @class PostView;
 @class Post;
 
-@interface DaPengTi2ViewController : UIViewController 
-@property (weak, nonatomic) IBOutlet PostView *postView;
+@interface DaPengTi2ViewController : UIViewController <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (nonatomic, strong) UIBarButtonItem *splitViewBarButtonItem;
+@property(nonatomic,strong) UIScrollView* pagingScrollView;
 @property(strong,nonatomic) Post* post;
--(void)updatePostViewForPost:(Post*)post;
+@property(strong,nonatomic) NSMutableSet *recycledPages;
+@property(strong,nonatomic) NSMutableSet *visiblePages;
+
+-(void)loadPosts:(NSArray*)posts;
 @end
