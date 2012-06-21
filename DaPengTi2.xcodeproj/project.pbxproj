@@ -30,6 +30,7 @@
 		D8497E461585C84600426273 /* test.txt in Resources */ = {isa = PBXBuildFile; fileRef = D8497E451585C84600426273 /* test.txt */; };
 		D8497E4A1585C88300426273 /* PostView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E491585C88300426273 /* PostView.m */; };
 		D8497E511585CA5200426273 /* MarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E501585CA5200426273 /* MarkupParser.m */; };
+		D855AEDC1592B31B00407926 /* PostTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D855AEDB1592B31B00407926 /* PostTitleView.m */; };
 		D8887B5815883E1000BD0083 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = D8887B5715883E1000BD0083 /* Post.m */; };
 		D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */; };
 		D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */; };
@@ -71,6 +72,8 @@
 		D8497E491585C88300426273 /* PostView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostView.m; sourceTree = "<group>"; };
 		D8497E4F1585CA5200426273 /* MarkupParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MarkupParser.h; path = lib/MarkupParser.h; sourceTree = "<group>"; };
 		D8497E501585CA5200426273 /* MarkupParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkupParser.m; path = lib/MarkupParser.m; sourceTree = "<group>"; };
+		D855AEDA1592B31B00407926 /* PostTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostTitleView.h; path = Views/PostTitleView.h; sourceTree = "<group>"; };
+		D855AEDB1592B31B00407926 /* PostTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTitleView.m; path = Views/PostTitleView.m; sourceTree = "<group>"; };
 		D8887B5615883E1000BD0083 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = Model/Post.h; sourceTree = "<group>"; };
 		D8887B5715883E1000BD0083 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = Model/Post.m; sourceTree = "<group>"; };
 		D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941222622892.jpg; path = Resources/133941222622892.jpg; sourceTree = "<group>"; };
@@ -189,6 +192,8 @@
 				D8279CAC1585E3170084C8AA /* PostColumnVIew.m */,
 				D809DA76158882D100051787 /* PostCell.h */,
 				D809DA77158882D100051787 /* PostCell.m */,
+				D855AEDA1592B31B00407926 /* PostTitleView.h */,
+				D855AEDB1592B31B00407926 /* PostTitleView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -284,6 +289,7 @@
 				D8887B5815883E1000BD0083 /* Post.m in Sources */,
 				D809DA7015887B9A00051787 /* PostTableViewController.m in Sources */,
 				D809DA78158882D100051787 /* PostCell.m in Sources */,
+				D855AEDC1592B31B00407926 /* PostTitleView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

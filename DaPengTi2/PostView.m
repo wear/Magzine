@@ -8,12 +8,15 @@
 
 #import "PostView.h"
 #import "PostColumnVIew.h"
+#import "PostTitleView.h"
 #import <CoreText/CoreText.h>
 #import "MarkupParser.h"
 #import "Post.h"
+
 #define FrameXOffset 60
 #define FrameYOffset 60
 #define FrameSplitOffset 10
+#define TitleHeight 120
 
 @interface PostView() 
 @property(strong,nonatomic) MarkupParser* parser;
@@ -48,15 +51,48 @@
     [self.parser.images removeAllObjects];
     
     NSAttributedString* attString = [self.parser attrStringFromMarkupForPost:post];
-    [self setAttString:attString withImages: self.parser.images];
-    [self buildFrames];
+    [self setAttString:attString withImages:self.parser.images];
+    [self buildFrames:post.layout];
 }
 
--(void)buildFrames{
+#define TitlePadding 60
+#define HeadLineHeight 420
+
+-(void)buildFrames:(NSString*)layout{
     self.pagingEnabled = YES;
     self.delegate = self;
     self.bounces = NO;
-    self.frames = [NSMutableArray array];
+//    self.frames = [NSMutableArray array];
+    BOOL haveHeadline = FALSE;
+    
+    //加入标题
+    CGMutablePathRef titlePath = CGPathCreateMutable(); //1
+    CGPathAddRect(titlePath, NULL, CGRectMake(0, 0, self.frame.size.width-2*FrameXOffset, TitleHeight));
+    
+    CTFramesetterRef titleFramesetter = CTFramesetterCreateWithAttributedString((__bridge CFAttributedStringRef)self.parser.title); //3
+    CTFrameRef titleFrame = CTFramesetterCreateFrame(titleFramesetter,CFRangeMake(0, 0), titlePath, NULL);
+    
+	PostTitleView *titleView = [[PostTitleView alloc] initWithFrame:CGRectMake(FrameXOffset, 2*FrameYOffset, self.frame.size.width-2*FrameXOffset, TitleHeight)];
+    titleView.titleFrame = (__bridge_transfer id)titleFrame;
+    titleView.backgroundColor = [UIColor clearColor];
+    [self addSubview:titleView];
+    
+    CFRelease(titleFramesetter);
+    CGPathRelease(titlePath);
+    
+    // 首屏大图
+    if ([layout isEqualToString:@"headline"]) {
+        for (NSDictionary* imageInfo in self.images) {
+            if ([[imageInfo valueForKey:@"class"] isEqualToString:@"headline"]) {
+                NSString* filename = [[self.images objectAtIndex:0] valueForKey:@"alt"];
+                UIImage* headlineImage = [self getImageData:filename];
+                UIImageView* headlineImageView =  [[UIImageView alloc] initWithImage:headlineImage];
+                headlineImageView.frame = CGRectMake(0, TitlePadding+TitleHeight, self.frame.size.width, HeadLineHeight);
+                [self addSubview:headlineImageView];
+            }
+        }
+        haveHeadline = TRUE;
+    }
     
     CGMutablePathRef textPath = CGPathCreateMutable(); //2
     CGRect textFrame = CGRectInset(self.frame, FrameXOffset, FrameYOffset);
@@ -68,9 +104,16 @@
     int columnIndex = 0;
     
     while (textPos < [_attString length]) { //4
-        CGPoint colOffset = CGPointMake( (columnIndex+1)*FrameXOffset-(columnIndex%2==0 ? 0 :1)*FrameXOffset/2 + columnIndex*(textFrame.size.width/2), FrameYOffset );
-        //如果是双数col就双倍offset
-        CGRect colRect = CGRectMake(0, 0 , textFrame.size.width/2-FrameXOffset/2, textFrame.size.height);
+        CGPoint  colOffset = CGPointMake( (columnIndex+1)*FrameXOffset-(columnIndex%2==0 ? 0 :1)*FrameXOffset/2 + columnIndex*(textFrame.size.width/2), FrameYOffset );
+        
+        CGRect colRect;
+        if (columnIndex >= 2) {
+            //如果是双数col就双倍offset
+            colRect =  CGRectMake(0, 0 , textFrame.size.width/2-FrameXOffset/2, textFrame.size.height);
+        } else {
+            colOffset = CGPointMake( (columnIndex+1)*FrameXOffset-(columnIndex%2==0 ? 0 :1)*FrameXOffset/2 + columnIndex*(textFrame.size.width/2), FrameYOffset+TitleHeight+TitlePadding+(haveHeadline ? HeadLineHeight : 0));
+            colRect =  CGRectMake(0, 0, textFrame.size.width/2-FrameXOffset/2, textFrame.size.height - TitleHeight -TitlePadding-(haveHeadline ? HeadLineHeight : 0));
+        }
         
         CGMutablePathRef path = CGPathCreateMutable();
         CGPathAddRect(path, NULL, colRect);
@@ -84,10 +127,10 @@
         content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height) ;
         
 		//set the column view contents and add it as subview
-        if([self.images count] > 0) [self attachImagesWithFrame:frame inColumnView:content atIndex:columnIndex];
+        if([self.images count] > (haveHeadline ? 1 : 0)) [self attachImagesWithFrame:frame inColumnView:content atIndex:columnIndex headline:haveHeadline];
         
         [content setPostFrame:(__bridge_transfer id)frame];  //6   
-        [self.frames addObject: (__bridge id)frame];
+//        [self.frames addObject: (__bridge id)frame];
         [self addSubview: content];
         
         //prepare for next frame
@@ -102,11 +145,11 @@
     //set the total width of the scroll view
     int totalPages = (columnIndex+1) / 2; //7
     self.contentSize = CGSizeMake(totalPages*self.bounds.size.width, textFrame.size.height);
-	CFRelease(textPath);
+	CGPathRelease(textPath);
     CFRelease(framesetter);
 }
 
--(void)attachImagesWithFrame:(CTFrameRef)f inColumnView:(PostColumnView*)col atIndex:(NSUInteger)colIndex
+-(void)attachImagesWithFrame:(CTFrameRef)f inColumnView:(PostColumnView*)col atIndex:(NSUInteger)colIndex headline:(BOOL)haveHeadline
 {
     //drawing images
     NSArray *lines = (__bridge NSArray *)CTFrameGetLines(f); //1
@@ -114,7 +157,7 @@
     CGPoint origins[[lines count]];
     CTFrameGetLineOrigins(f, CFRangeMake(0, 0), origins); //2
     
-    int imgIndex = 0; //3
+    int imgIndex = haveHeadline ? 1 : 0; //3
     NSDictionary* nextImage = [self.images objectAtIndex:imgIndex];
     int imgLocation = [[nextImage objectForKey:@"location"] intValue];
     
@@ -148,16 +191,12 @@
 	            runBounds.origin.y -= descent;
 
                 // 如果没有图片怎么办？
-                NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                path = [path stringByAppendingPathComponent:[nextImage objectForKey:@"alt"]];
-
-                UIImage *img = [UIImage imageWithContentsOfFile:path];
+				UIImage *img = [self getImageData:[nextImage objectForKey:@"alt"]];
 
                 CGPathRef pathRef = CTFrameGetPath(f); //10
                 CGRect colRect = CGPathGetBoundingBox(pathRef);
                 
                 CGRect imgBounds = CGRectOffset(runBounds, colRect.origin.x - 2*FrameXOffset - self.contentOffset.x-(self.frame.size.width+PagingScrollPadding)*self.index, colRect.origin.y - FrameYOffset - self.frame.origin.y);
-                NSLog(@"imgBounds　%@",NSStringFromCGRect(imgBounds));
                 [col.images addObject: [NSArray arrayWithObjects:img, NSStringFromCGRect(imgBounds) ,[NSNumber numberWithInteger:self.index], nil]]; 
 
                 //load the next image //12
@@ -171,6 +210,14 @@
         }
         lineIndex++;
     }
+}
+
+-(UIImage*)getImageData:(NSString*)filename{
+    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    path = [path stringByAppendingPathComponent:filename];
+    
+    UIImage *img = [UIImage imageWithContentsOfFile:path];
+    return img;
 }
 
 

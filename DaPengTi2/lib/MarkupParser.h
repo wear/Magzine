@@ -16,6 +16,8 @@
 @property (strong, nonatomic) UIColor* color;
 @property (strong, nonatomic) UIColor* strokeColor;
 @property (assign, readwrite) float strokeWidth;
+@property(strong,nonatomic) NSAttributedString* title;
+
 
 @property (strong, nonatomic) NSMutableArray* images;
 

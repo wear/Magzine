@@ -29,6 +29,7 @@ static CGFloat widthCallback( void* ref ){
 @synthesize font, color, strokeColor, strokeWidth;
 @synthesize fontSize;
 @synthesize images = _images;
+@synthesize title = _title;
 
 -(id)init
 {
@@ -105,51 +106,34 @@ static CGFloat widthCallback( void* ref ){
                            (id)[NSNumber numberWithFloat: self.strokeWidth], (NSString *)kCTStrokeWidthAttributeName,
                            nil];
     
+	//标题与样式
+    NSMutableDictionary *titleAttrs = [NSMutableDictionary dictionary];
+    [titleAttrs setDictionary:attrs];
+    CTFontRef h1FontRef = CTFontCreateWithName((__bridge CFStringRef)@"STHeitiSC-Medium",
+                                               36., NULL);
+    //設定行高
+    CGFloat lineSpaceh1= 54;
+    CTParagraphStyleSetting lineSpaceStyleh1;
+    lineSpaceStyleh1.spec=kCTParagraphStyleSpecifierMinimumLineHeight;
+    lineSpaceStyleh1.valueSize=sizeof(lineSpaceh1);
+    lineSpaceStyleh1.value=&lineSpaceh1;
+    
+    CTParagraphStyleSetting h1settings[1]={
+        lineSpaceStyleh1
+    };
+    CTParagraphStyleRef h1paragraphStyle = CTParagraphStyleCreate(h1settings, sizeof(h1settings));
+    
+    [titleAttrs setValue:(__bridge_transfer id)h1FontRef forKey:(NSString *)kCTFontAttributeName];
+    [titleAttrs setValue:(__bridge_transfer id)h1paragraphStyle forKey:(id)kCTParagraphStyleAttributeName];
+
+    self.title = [[NSAttributedString alloc] initWithString:post.title attributes:titleAttrs];
+        
+    
     // 顺序解析标签
     while ([entryNodes count] > nodeCount) {
         
         HTMLNode* currentNode = [entryNodes objectAtIndex:nodeCount];
         NSString *currentNodeContent = [currentNode contents];
-        
-        if ([[currentNode tagName] isEqualToString:@"h1"]) {    
-            NSMutableDictionary *mutAttrs = [[NSMutableDictionary alloc] init];
-            [mutAttrs setDictionary:attrs];
-            CTFontRef h1FontRef = CTFontCreateWithName((__bridge CFStringRef)@"STHeitiSC-Medium",
-                                                     36., NULL);
-            //設定行高
-            CGFloat lineSpaceh1= 54;
-            CTParagraphStyleSetting lineSpaceStyleh1;
-            lineSpaceStyleh1.spec=kCTParagraphStyleSpecifierMinimumLineHeight;
-            lineSpaceStyleh1.valueSize=sizeof(lineSpaceh1);
-            lineSpaceStyleh1.value=&lineSpaceh1;
-            
-            CTParagraphStyleSetting h1settings[1]={
-                lineSpaceStyleh1
-            };
-            CTParagraphStyleRef h1paragraphStyle = CTParagraphStyleCreate(h1settings, sizeof(h1settings));
-            
-            [mutAttrs setValue:(__bridge_transfer id)h1FontRef forKey:(NSString *)kCTFontAttributeName];
-			[mutAttrs setValue:(__bridge_transfer id)h1paragraphStyle forKey:(id)kCTParagraphStyleAttributeName];
-            
-            NSArray* spanNodes = [currentNode findChildTags:@"span"];
-            
-            if ([spanNodes count] > 0) {
-                //如果带源span,则仅换行
-                NSString* source = [[spanNodes objectAtIndex:0] contents];
-                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[currentNodeContent stringByAppendingString:@"\r"] attributes:(NSDictionary*)mutAttrs]];
-                
-                CTFontRef sourceSpanFontRef = CTFontCreateWithName((__bridge CFStringRef)self.font,
-                                                           14., NULL);
-                [mutAttrs setValue:(__bridge_transfer id)sourceSpanFontRef forKey:(NSString *)kCTFontAttributeName];
-                [mutAttrs setValue:(id)[UIColor grayColor].CGColor forKey:(NSString *)kCTForegroundColorAttributeName];
-                
-                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[source stringByAppendingString:@"\r\r"] attributes:(NSDictionary*)mutAttrs]];
-                
-            } else {
-                //如果不带源span,则成段落，段落默认双换行
-                if (currentNodeContent) [aString appendAttributedString:[[NSAttributedString alloc] initWithString:[currentNodeContent stringByAppendingString:@"\r\r"] attributes:(NSDictionary*)mutAttrs]];
-            }
-        }
 
         if ([[currentNode tagName] isEqualToString:@"p"]) {
             
@@ -173,32 +157,35 @@ static CGFloat widthCallback( void* ref ){
                                          [NSNumber numberWithInteger:[aString length]],@"location",
                                          [imgNode getAttributeNamed:@"src"],@"src",
                                          [imgNode getAttributeNamed:@"alt"],@"alt",
+                                         [imgNode getAttributeNamed:@"class"],@"class",
                                          post.postId,@"postID",
                                          nil];
                 
                 [self.images addObject:imginfo];
                 
-                //render empty space for drawing the image in the text //1
-                CTRunDelegateCallbacks callbacks;
-                callbacks.version = kCTRunDelegateVersion1;
-                callbacks.getAscent = ascentCallback;
-                callbacks.getDescent = descentCallback;
-                callbacks.getWidth = widthCallback;
-                callbacks.dealloc = deallocCallback;
-                
-                NSDictionary* imgAttr = [NSDictionary dictionaryWithObjectsAndKeys: //2
-                                         [imgNode getAttributeNamed:@"width"], @"width",
-                                         [imgNode getAttributeNamed:@"height"], @"height",
-                                         nil];
-                
-                CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks,(__bridge_retained void*)imgAttr); //3
-                NSDictionary *attrDictionaryDelegate = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                        //set the delegate
-                                                        (__bridge_transfer id)delegate, (NSString*)kCTRunDelegateAttributeName,
-                                                        nil];
-                
-                //add a space to the text so that it can call the delegate
-                [aString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:attrDictionaryDelegate]];
+                if (![[imginfo valueForKey:@"class"] isEqualToString:@"headline"]) {
+                    //render empty space for drawing the image in the text //1
+                    CTRunDelegateCallbacks callbacks;
+                    callbacks.version = kCTRunDelegateVersion1;
+                    callbacks.getAscent = ascentCallback;
+                    callbacks.getDescent = descentCallback;
+                    callbacks.getWidth = widthCallback;
+                    callbacks.dealloc = deallocCallback;
+                    
+                    NSDictionary* imgAttr = [NSDictionary dictionaryWithObjectsAndKeys: //2
+                                             [imgNode getAttributeNamed:@"width"], @"width",
+                                             [imgNode getAttributeNamed:@"height"], @"height",
+                                             nil];
+                    
+                    CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks,(__bridge_retained void*)imgAttr); //3
+                    NSDictionary *attrDictionaryDelegate = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                            //set the delegate
+                                                            (__bridge_transfer id)delegate, (NSString*)kCTRunDelegateAttributeName,
+                                                            nil];
+                    
+                    //add a space to the text so that it can call the delegate
+                    [aString appendAttributedString:[[NSAttributedString alloc] initWithString:@" " attributes:attrDictionaryDelegate]];
+                }
             }
         }
         nodeCount += 1;
