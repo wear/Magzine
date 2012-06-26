@@ -39,7 +39,7 @@ static CGFloat widthCallback( void* ref ){
         self.color = [UIColor blackColor];
         self.strokeColor = [UIColor whiteColor];
         self.strokeWidth = 0.0;
-        self.fontSize = 21.;
+        self.fontSize = 16.;
         self.images = [NSMutableArray array];
     }
     return self;
@@ -109,7 +109,7 @@ static CGFloat widthCallback( void* ref ){
 	//标题与样式
     NSMutableDictionary *titleAttrs = [NSMutableDictionary dictionary];
     [titleAttrs setDictionary:attrs];
-    CTFontRef h1FontRef = CTFontCreateWithName((__bridge CFStringRef)@"STHeitiSC-Medium",
+    CTFontRef h1FontRef = CTFontCreateWithName((__bridge CFStringRef)@"STZhongsong",
                                                36., NULL);
     //設定行高
     CGFloat lineSpaceh1= 54;
@@ -141,7 +141,7 @@ static CGFloat widthCallback( void* ref ){
             
             // 小标题
             for (HTMLNode *strongNode in [currentNode findChildTags:@"strong"]) {
-                CTFontRef strongFontRef = CTFontCreateWithName((__bridge CFStringRef)@"STHeitiSC-Medium",
+                CTFontRef strongFontRef = CTFontCreateWithName((__bridge CFStringRef)@"STZhongsong",
                                                     21., NULL);
             	NSMutableDictionary *mutAttrs = [[NSMutableDictionary alloc] init];
             	[mutAttrs setDictionary:attrs];

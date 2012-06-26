@@ -6,12 +6,13 @@
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "PostColumnVIew.h"
+#import "PostColumnView.h"
 #import <CoreText/CoreText.h>
 
 @implementation PostColumnView
 @synthesize postFrame = _postFrame;
 @synthesize images = _images;
+@synthesize colIndex;
 
 -(id)initWithFrame:(CGRect)frame
 {

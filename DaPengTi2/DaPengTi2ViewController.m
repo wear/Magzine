@@ -16,6 +16,7 @@
 
 - (void)tilePosts;
 - (void)configurePost:(PostView *)page forIndex:(NSUInteger)index;
+-(BOOL)isCurrentOritationLandscape;
 @end
 
 @implementation DaPengTi2ViewController
@@ -32,17 +33,6 @@
     self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
                                                self.pagingScrollView.bounds.size.height); 
     [self tilePosts];
-//    for (int i=0;i<5;i++) {
-//        Post* post= [posts objectAtIndex:i];
-//        PostView* postView = [[PostView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//        MarkupParser *parser = [[MarkupParser alloc] init];
-//        NSAttributedString* attString = [parser attrStringFromMarkupForPost:post];
-//        [postView setAttString:attString withImages:parser.images];
-//        [postView buildFrames];
-//        
-//        [self configurePost:postView forIndex:i];
-//        [self.view addSubview:postView];
-//    }
 }
 
 // Puts the splitViewBarButton in our toolbar (and/or removes the old one).
@@ -67,14 +57,29 @@
 
 -(void)viewWillAppear:(BOOL)animated{
 	[super viewWillAppear:animated];
+    
     CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
     self.pagingScrollView = [[UIScrollView alloc] initWithFrame:pagingScrollViewFrame];
     self.pagingScrollView.pagingEnabled = YES;
+	_pagingScrollView.backgroundColor = [UIColor clearColor];
     self.pagingScrollView.showsVerticalScrollIndicator = NO;
     self.pagingScrollView.showsHorizontalScrollIndicator = NO;
     self.pagingScrollView.bounces = NO;
     self.pagingScrollView.delegate = self;
     [self.view addSubview:self.pagingScrollView];
+}
+
+-(BOOL)isCurrentOritationLandscape{
+    BOOL landscape = NO;
+//	UIDevice *device = [UIDevice currentDevice];
+    UIInterfaceOrientation oritation = [[UIApplication sharedApplication] statusBarOrientation];
+
+    if (oritation == UIInterfaceOrientationLandscapeLeft || oritation == UIInterfaceOrientationLandscapeRight) {
+        landscape = YES;
+    } else {
+        landscape = NO;
+    }
+    return landscape;
 }
 
 - (void)viewDidLoad
@@ -100,7 +105,7 @@
 
 
     self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
-                                               self.pagingScrollView.bounds.size.height); 
+                                               self.pagingScrollView.bounds.size.height);
 }
 
 - (void)viewDidUnload
@@ -115,17 +120,21 @@
     return YES;
 }
 
+-(void)updatePagingFrameAndTilePost{
+	if(self.postList){
+        NSLog(@"update %@",NSStringFromCGRect(self.pagingScrollView.frame));
+        PostView* CurrentPostView = [self.visiblePages anyObject];
+    	self.pagingScrollView.frame = [self frameForPagingScrollView];
+        self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
+                                                       self.pagingScrollView.bounds.size.height);
+		[self configurePost:CurrentPostView forIndex:CurrentPostView.index];
+        for (UIView* view in self.pagingScrollView.subviews) [view removeFromSuperview];
+        [self.pagingScrollView addSubview:CurrentPostView];
+    }
+}
+
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-//    if(self.post){
-//        for (UIView *view in self.postView.subviews) {
-//            [view removeFromSuperview];
-//        }
-//        
-//        MarkupParser* p = [[MarkupParser alloc] init];
-//        NSAttributedString* attString = [p attrStringFromMarkup:self.post.content];
-//        [self.postView setAttString:attString withImages: p.images];
-//        [self.postView buildFrames];
-//    }	
+    [self updatePagingFrameAndTilePost];  
 }
 
 
@@ -137,7 +146,8 @@
     // Calculate which pages are visible
     CGRect visibleBounds = _pagingScrollView.bounds;
     int firstNeededPageIndex = floorf(CGRectGetMinX(visibleBounds) / CGRectGetWidth(visibleBounds));
-    int lastNeededPageIndex  = floorf((CGRectGetMaxX(visibleBounds)-1) / CGRectGetWidth(visibleBounds));
+    int lastNeededPageIndex  = floorf((CGRectGetMaxX(visibleBounds)-1) / CGRectGetWidth(visibleBounds));   
+    
     firstNeededPageIndex = MAX(firstNeededPageIndex, 0);
     lastNeededPageIndex  = MIN(lastNeededPageIndex, [self.postList count] - 1);
     // Recycle no-longer-visible pages 
@@ -176,7 +186,6 @@
 {
     PostView *page = [_recycledPages anyObject];
     if (page) {
-//        [[page retain] autorelease];
         [_recycledPages removeObject:page];
     }
     return page;
@@ -194,19 +203,26 @@
     return foundPage;
 }
 
-
-
 #pragma mark -
 #pragma mark  Frame calculations
 
-- (CGRect)frameForPagingScrollView {
-    CGRect frame = [[UIScreen mainScreen] bounds];
+- (CGRect)frameForPagingScrollView{
+    CGRect frame = CGRectMake(0, 0, 0, 0);
+    if ([self isCurrentOritationLandscape]) {
+        frame.size.width = [[UIScreen mainScreen] bounds].size.height;
+        frame.size.height = [[UIScreen mainScreen] bounds].size.width;
+    } else {
+        frame.size.width = [[UIScreen mainScreen] bounds].size.width;
+        frame.size.height = [[UIScreen mainScreen] bounds].size.height;
+    }
+     
     frame.origin.x -= PagingScrollPadding;
     frame.size.width += (2 * PagingScrollPadding);
+    
     return frame;
 }
 
-- (CGRect)frameForPageAtIndex:(NSUInteger)index {
+- (CGRect)frameForPageAtIndex:(NSUInteger)index{
     CGRect pagingScrollViewFrame = [self frameForPagingScrollView];
     
     CGRect pageFrame = pagingScrollViewFrame;

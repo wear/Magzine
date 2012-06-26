@@ -32,6 +32,7 @@
 		D8497E511585CA5200426273 /* MarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E501585CA5200426273 /* MarkupParser.m */; };
 		D855AEDC1592B31B00407926 /* PostTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D855AEDB1592B31B00407926 /* PostTitleView.m */; };
 		D8887B5815883E1000BD0083 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = D8887B5715883E1000BD0083 /* Post.m */; };
+		D8EADA35159993630066F51D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8EADA34159993630066F51D /* CoreData.framework */; };
 		D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */; };
 		D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */; };
 /* End PBXBuildFile section */
@@ -76,6 +77,7 @@
 		D855AEDB1592B31B00407926 /* PostTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTitleView.m; path = Views/PostTitleView.m; sourceTree = "<group>"; };
 		D8887B5615883E1000BD0083 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = Model/Post.h; sourceTree = "<group>"; };
 		D8887B5715883E1000BD0083 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = Model/Post.m; sourceTree = "<group>"; };
+		D8EADA34159993630066F51D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941222622892.jpg; path = Resources/133941222622892.jpg; sourceTree = "<group>"; };
 		D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941243718342.jpg; path = Resources/133941243718342.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -85,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D8EADA35159993630066F51D /* CoreData.framework in Frameworks */,
 				D8497E431585C79200426273 /* CoreText.framework in Frameworks */,
 				D8497E411585C60D00426273 /* libxml2.dylib in Frameworks */,
 				D8497E1B1585C4E400426273 /* UIKit.framework in Frameworks */,
@@ -116,6 +119,7 @@
 		D8497E191585C4E400426273 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D8EADA34159993630066F51D /* CoreData.framework */,
 				D8497E421585C79200426273 /* CoreText.framework */,
 				D8497E401585C60D00426273 /* libxml2.dylib */,
 				D8497E1A1585C4E400426273 /* UIKit.framework */,

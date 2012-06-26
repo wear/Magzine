@@ -4,6 +4,12 @@
 
 #import <Availability.h>
 #define PagingScrollPadding  10
+#define FrameXOffset 60
+#define FrameYOffset 60
+#define FrameSplitOffset 10
+#define TitleHeight 120
+#define TitlePadding 60
+#define HeadLineHeight 420
 
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."

@@ -11,4 +11,5 @@
 @interface PostColumnView : UIView
 @property(strong,nonatomic) id postFrame;
 @property (strong, nonatomic) NSMutableArray* images;
+@property(assign) NSUInteger colIndex;
 @end

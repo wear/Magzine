@@ -11,9 +11,10 @@
 
 @interface PostView : UIScrollView<UIScrollViewDelegate>
 @property(strong, nonatomic) NSAttributedString* attString;
-@property (strong, nonatomic) NSMutableArray* frames;
+@property (strong, nonatomic) NSMutableArray* columns;
 @property(strong,nonatomic) NSArray* images;
-@property (assign) NSUInteger index;
+@property(assign) NSUInteger index;
+@property(strong,nonatomic) NSMutableArray* firstPageContent;
 
 -(void)setAttString:(NSAttributedString *)string withImages:(NSArray*)imgs;
 -(void)displayTiledPost:(Post*)post;

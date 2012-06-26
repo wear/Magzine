@@ -7,27 +7,26 @@
 //
 
 #import "PostView.h"
-#import "PostColumnVIew.h"
+#import "PostColumnView.h"
 #import "PostTitleView.h"
 #import <CoreText/CoreText.h>
 #import "MarkupParser.h"
 #import "Post.h"
 
-#define FrameXOffset 60
-#define FrameYOffset 60
-#define FrameSplitOffset 10
-#define TitleHeight 120
-
 @interface PostView() 
 @property(strong,nonatomic) MarkupParser* parser;
+@property(assign) int totalPages;
 @end
 
 @implementation PostView
 @synthesize attString = _attString;
-@synthesize frames = _frames;
+@synthesize columns = _columns;
 @synthesize images = _images;
 @synthesize index;
 @synthesize parser = _parser;
+@synthesize firstPageContent = _firstPageContent;
+@synthesize totalPages;
+
 
 -(MarkupParser*)parser{
     if (!_parser) {
@@ -55,14 +54,11 @@
     [self buildFrames:post.layout];
 }
 
-#define TitlePadding 60
-#define HeadLineHeight 420
 
 -(void)buildFrames:(NSString*)layout{
     self.pagingEnabled = YES;
     self.delegate = self;
     self.bounces = NO;
-//    self.frames = [NSMutableArray array];
     BOOL haveHeadline = FALSE;
     
     //加入标题
@@ -75,6 +71,7 @@
 	PostTitleView *titleView = [[PostTitleView alloc] initWithFrame:CGRectMake(FrameXOffset, 2*FrameYOffset, self.frame.size.width-2*FrameXOffset, TitleHeight)];
     titleView.titleFrame = (__bridge_transfer id)titleFrame;
     titleView.backgroundColor = [UIColor clearColor];
+    [self.firstPageContent addObject:titleView];
     [self addSubview:titleView];
     
     CFRelease(titleFramesetter);
@@ -88,6 +85,7 @@
                 UIImage* headlineImage = [self getImageData:filename];
                 UIImageView* headlineImageView =  [[UIImageView alloc] initWithImage:headlineImage];
                 headlineImageView.frame = CGRectMake(0, TitlePadding+TitleHeight, self.frame.size.width, HeadLineHeight);
+                [self.firstPageContent addObject:headlineImageView];
                 [self addSubview:headlineImageView];
             }
         }
@@ -122,7 +120,7 @@
         CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(textPos, 0), path, NULL);
         CFRange frameRange = CTFrameGetVisibleStringRange(frame); //5
         //create an empty column view
-        PostColumnView* content = [[PostColumnView alloc] initWithFrame: CGRectMake(0, 0, self.contentSize.width, self.contentSize.height)];
+        PostColumnView* content = [[PostColumnView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         content.backgroundColor = [UIColor clearColor];
         content.frame = CGRectMake(colOffset.x, colOffset.y, colRect.size.width, colRect.size.height) ;
         
@@ -130,7 +128,7 @@
         if([self.images count] > (haveHeadline ? 1 : 0)) [self attachImagesWithFrame:frame inColumnView:content atIndex:columnIndex headline:haveHeadline];
         
         [content setPostFrame:(__bridge_transfer id)frame];  //6   
-//        [self.frames addObject: (__bridge id)frame];
+//        [self.columns addObject: content];
         [self addSubview: content];
         
         //prepare for next frame
@@ -138,13 +136,13 @@
         
         //CFRelease(frame);
 		CGPathRelease(path);
-        
         columnIndex++;
     }
     
     //set the total width of the scroll view
-    int totalPages = (columnIndex+1) / 2; //7
-    self.contentSize = CGSizeMake(totalPages*self.bounds.size.width, textFrame.size.height);
+    self.totalPages = (columnIndex+1) / 2; //7
+    self.contentSize = CGSizeMake(self.totalPages*self.bounds.size.width, textFrame.size.height);
+    
 	CGPathRelease(textPath);
     CFRelease(framesetter);
 }
@@ -219,6 +217,5 @@
     UIImage *img = [UIImage imageWithContentsOfFile:path];
     return img;
 }
-
 
 @end
