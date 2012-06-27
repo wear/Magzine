@@ -69,6 +69,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -195,5 +196,8 @@
 //    DaPengTi2ViewController* detailVC = [self.splitViewController.viewControllers lastObject];
 //	[detailVC updatePostViewForPost:post];
 }
+
+// coreData
+
 
 @end

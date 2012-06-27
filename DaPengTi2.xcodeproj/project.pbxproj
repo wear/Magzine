@@ -33,6 +33,7 @@
 		D855AEDC1592B31B00407926 /* PostTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D855AEDB1592B31B00407926 /* PostTitleView.m */; };
 		D8887B5815883E1000BD0083 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = D8887B5715883E1000BD0083 /* Post.m */; };
 		D8EADA35159993630066F51D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8EADA34159993630066F51D /* CoreData.framework */; };
+		D8EADA39159993EF0066F51D /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D8EADA37159993EF0066F51D /* Database.xcdatamodeld */; };
 		D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */; };
 		D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */; };
 /* End PBXBuildFile section */
@@ -78,6 +79,7 @@
 		D8887B5615883E1000BD0083 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = Model/Post.h; sourceTree = "<group>"; };
 		D8887B5715883E1000BD0083 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = Model/Post.m; sourceTree = "<group>"; };
 		D8EADA34159993630066F51D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D8EADA38159993EF0066F51D /* DataBase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataBase.xcdatamodel; sourceTree = "<group>"; };
 		D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941222622892.jpg; path = Resources/133941222622892.jpg; sourceTree = "<group>"; };
 		D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941243718342.jpg; path = Resources/133941243718342.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -145,6 +147,7 @@
 				D809DA6F15887B9A00051787 /* PostTableViewController.m */,
 				D8497E211585C4E500426273 /* Supporting Files */,
 				D832B9FD15899A7B00B0301C /* ReadMe */,
+				D8EADA37159993EF0066F51D /* Database.xcdatamodeld */,
 			);
 			path = DaPengTi2;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				D809DA7015887B9A00051787 /* PostTableViewController.m in Sources */,
 				D809DA78158882D100051787 /* PostCell.m in Sources */,
 				D855AEDC1592B31B00407926 /* PostTitleView.m in Sources */,
+				D8EADA39159993EF0066F51D /* Database.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +416,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D8EADA37159993EF0066F51D /* Database.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D8EADA38159993EF0066F51D /* DataBase.xcdatamodel */,
+			);
+			currentVersion = D8EADA38159993EF0066F51D /* DataBase.xcdatamodel */;
+			name = Database.xcdatamodeld;
+			path = DataBase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D8497E0D1585C4E300426273 /* Project object */;
 }
