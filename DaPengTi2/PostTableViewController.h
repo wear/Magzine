@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Issue;
 
-@interface PostTableViewController : UITableViewController <UISplitViewControllerDelegate>
 
+@interface PostTableViewController : UITableViewController 
+@property(strong,nonatomic) Issue* issue;
 @end

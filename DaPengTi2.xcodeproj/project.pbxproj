@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		D809DA7015887B9A00051787 /* PostTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D809DA6F15887B9A00051787 /* PostTableViewController.m */; };
 		D809DA78158882D100051787 /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D809DA77158882D100051787 /* PostCell.m */; };
+		D8101A5C15A1D5BC00E21CBA /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D8101A5A15A1D5BC00E21CBA /* Database.xcdatamodeld */; };
+		D8101A6215A1D72200E21CBA /* Picture.m in Sources */ = {isa = PBXBuildFile; fileRef = D8101A6115A1D72200E21CBA /* Picture.m */; };
+		D8101A6815A1D76D00E21CBA /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = D8101A6715A1D76D00E21CBA /* Post.m */; };
+		D8101A6E15A1D7B400E21CBA /* Issue.m in Sources */ = {isa = PBXBuildFile; fileRef = D8101A6D15A1D7B400E21CBA /* Issue.m */; };
+		D8101A7115A1D7E600E21CBA /* Picture+feed.m in Sources */ = {isa = PBXBuildFile; fileRef = D8101A7015A1D7E600E21CBA /* Picture+feed.m */; };
+		D8101A7815A1D86500E21CBA /* Post+feed.m in Sources */ = {isa = PBXBuildFile; fileRef = D8101A7715A1D86500E21CBA /* Post+feed.m */; };
+		D8101A7C15A1D89A00E21CBA /* Issue+list.m in Sources */ = {isa = PBXBuildFile; fileRef = D8101A7B15A1D89A00E21CBA /* Issue+list.m */; };
+		D8101A7F15A1D94600E21CBA /* IssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D8101A7E15A1D94600E21CBA /* IssueViewController.m */; };
 		D8279CAD1585E3170084C8AA /* PostColumnVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = D8279CAC1585E3170084C8AA /* PostColumnVIew.m */; };
 		D8279CB3158618AE0084C8AA /* xkily.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8279CB2158618AE0084C8AA /* xkily.jpg */; };
 		D832B9FE15899A7B00B0301C /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = D832B9FD15899A7B00B0301C /* ReadMe */; };
@@ -31,7 +39,6 @@
 		D8497E4A1585C88300426273 /* PostView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E491585C88300426273 /* PostView.m */; };
 		D8497E511585CA5200426273 /* MarkupParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D8497E501585CA5200426273 /* MarkupParser.m */; };
 		D855AEDC1592B31B00407926 /* PostTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = D855AEDB1592B31B00407926 /* PostTitleView.m */; };
-		D8887B5815883E1000BD0083 /* Post.m in Sources */ = {isa = PBXBuildFile; fileRef = D8887B5715883E1000BD0083 /* Post.m */; };
 		D8EADA35159993630066F51D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8EADA34159993630066F51D /* CoreData.framework */; };
 		D8F70B2C1586E4CB00A0C7EC /* 133941222622892.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */; };
 		D8F70B2D1586E4CB00A0C7EC /* 133941243718342.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */; };
@@ -42,6 +49,21 @@
 		D809DA6F15887B9A00051787 /* PostTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostTableViewController.m; sourceTree = "<group>"; };
 		D809DA76158882D100051787 /* PostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostCell.h; path = Views/PostCell.h; sourceTree = "<group>"; };
 		D809DA77158882D100051787 /* PostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostCell.m; path = Views/PostCell.m; sourceTree = "<group>"; };
+		D8101A5B15A1D5BC00E21CBA /* Database.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Database.xcdatamodel; sourceTree = "<group>"; };
+		D8101A6015A1D72200E21CBA /* Picture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Picture.h; path = Model/Picture.h; sourceTree = "<group>"; };
+		D8101A6115A1D72200E21CBA /* Picture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Picture.m; path = Model/Picture.m; sourceTree = "<group>"; };
+		D8101A6615A1D76D00E21CBA /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = Model/Post.h; sourceTree = "<group>"; };
+		D8101A6715A1D76D00E21CBA /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = Model/Post.m; sourceTree = "<group>"; };
+		D8101A6C15A1D7B400E21CBA /* Issue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Issue.h; path = Model/Issue.h; sourceTree = "<group>"; };
+		D8101A6D15A1D7B400E21CBA /* Issue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Issue.m; path = Model/Issue.m; sourceTree = "<group>"; };
+		D8101A6F15A1D7E600E21CBA /* Picture+feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Picture+feed.h"; path = "Model/Picture+feed.h"; sourceTree = "<group>"; };
+		D8101A7015A1D7E600E21CBA /* Picture+feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Picture+feed.m"; path = "Model/Picture+feed.m"; sourceTree = "<group>"; };
+		D8101A7615A1D86500E21CBA /* Post+feed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Post+feed.h"; path = "Model/Post+feed.h"; sourceTree = "<group>"; };
+		D8101A7715A1D86500E21CBA /* Post+feed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Post+feed.m"; path = "Model/Post+feed.m"; sourceTree = "<group>"; };
+		D8101A7A15A1D89A00E21CBA /* Issue+list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Issue+list.h"; path = "Model/Issue+list.h"; sourceTree = "<group>"; };
+		D8101A7B15A1D89A00E21CBA /* Issue+list.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "Issue+list.m"; path = "Model/Issue+list.m"; sourceTree = "<group>"; };
+		D8101A7D15A1D94600E21CBA /* IssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IssueViewController.h; path = Model/IssueViewController.h; sourceTree = "<group>"; };
+		D8101A7E15A1D94600E21CBA /* IssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IssueViewController.m; path = Model/IssueViewController.m; sourceTree = "<group>"; };
 		D8279CAB1585E3170084C8AA /* PostColumnVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostColumnVIew.h; sourceTree = "<group>"; };
 		D8279CAC1585E3170084C8AA /* PostColumnVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostColumnVIew.m; sourceTree = "<group>"; };
 		D8279CB2158618AE0084C8AA /* xkily.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = xkily.jpg; path = Resources/xkily.jpg; sourceTree = "<group>"; };
@@ -75,8 +97,6 @@
 		D8497E501585CA5200426273 /* MarkupParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MarkupParser.m; path = lib/MarkupParser.m; sourceTree = "<group>"; };
 		D855AEDA1592B31B00407926 /* PostTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostTitleView.h; path = Views/PostTitleView.h; sourceTree = "<group>"; };
 		D855AEDB1592B31B00407926 /* PostTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostTitleView.m; path = Views/PostTitleView.m; sourceTree = "<group>"; };
-		D8887B5615883E1000BD0083 /* Post.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Post.h; path = Model/Post.h; sourceTree = "<group>"; };
-		D8887B5715883E1000BD0083 /* Post.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Post.m; path = Model/Post.m; sourceTree = "<group>"; };
 		D8EADA34159993630066F51D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		D8F70B2A1586E4CB00A0C7EC /* 133941222622892.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941222622892.jpg; path = Resources/133941222622892.jpg; sourceTree = "<group>"; };
 		D8F70B2B1586E4CB00A0C7EC /* 133941243718342.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = 133941243718342.jpg; path = Resources/133941243718342.jpg; sourceTree = "<group>"; };
@@ -99,6 +119,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D8101A8415A1E69C00E21CBA /* HTMLNode */ = {
+			isa = PBXGroup;
+			children = (
+				D8497E3A1585C5BF00426273 /* HTMLParser.h */,
+				D8497E3B1585C5BF00426273 /* HTMLParser.m */,
+				D8497E381585C5BF00426273 /* HTMLNode.h */,
+				D8497E391585C5BF00426273 /* HTMLNode.m */,
+				D8497E3C1585C5BF00426273 /* README.md */,
+			);
+			name = HTMLNode;
+			sourceTree = "<group>";
+		};
 		D8497E0B1585C4E300426273 = {
 			isa = PBXGroup;
 			children = (
@@ -137,14 +169,15 @@
 				D8497E441585C80B00426273 /* Resources */,
 				D8497E371585C57D00426273 /* lib */,
 				D8497E2C1585C4E500426273 /* MainStoryboard.storyboard */,
-				D8497E4F1585CA5200426273 /* MarkupParser.h */,
-				D8497E501585CA5200426273 /* MarkupParser.m */,
 				D8497E2F1585C4E500426273 /* DaPengTi2ViewController.h */,
 				D8497E301585C4E500426273 /* DaPengTi2ViewController.m */,
 				D809DA6E15887B9A00051787 /* PostTableViewController.h */,
 				D809DA6F15887B9A00051787 /* PostTableViewController.m */,
 				D8497E211585C4E500426273 /* Supporting Files */,
 				D832B9FD15899A7B00B0301C /* ReadMe */,
+				D8101A5A15A1D5BC00E21CBA /* Database.xcdatamodeld */,
+				D8101A7D15A1D94600E21CBA /* IssueViewController.h */,
+				D8101A7E15A1D94600E21CBA /* IssueViewController.m */,
 			);
 			path = DaPengTi2;
 			sourceTree = "<group>";
@@ -165,11 +198,9 @@
 		D8497E371585C57D00426273 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				D8497E3A1585C5BF00426273 /* HTMLParser.h */,
-				D8497E3B1585C5BF00426273 /* HTMLParser.m */,
-				D8497E381585C5BF00426273 /* HTMLNode.h */,
-				D8497E391585C5BF00426273 /* HTMLNode.m */,
-				D8497E3C1585C5BF00426273 /* README.md */,
+				D8497E4F1585CA5200426273 /* MarkupParser.h */,
+				D8497E501585CA5200426273 /* MarkupParser.m */,
+				D8101A8415A1E69C00E21CBA /* HTMLNode */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -205,8 +236,18 @@
 		D8887B5415883DE600BD0083 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D8887B5615883E1000BD0083 /* Post.h */,
-				D8887B5715883E1000BD0083 /* Post.m */,
+				D8101A6C15A1D7B400E21CBA /* Issue.h */,
+				D8101A6D15A1D7B400E21CBA /* Issue.m */,
+				D8101A6615A1D76D00E21CBA /* Post.h */,
+				D8101A6715A1D76D00E21CBA /* Post.m */,
+				D8101A6015A1D72200E21CBA /* Picture.h */,
+				D8101A6115A1D72200E21CBA /* Picture.m */,
+				D8101A6F15A1D7E600E21CBA /* Picture+feed.h */,
+				D8101A7015A1D7E600E21CBA /* Picture+feed.m */,
+				D8101A7615A1D86500E21CBA /* Post+feed.h */,
+				D8101A7715A1D86500E21CBA /* Post+feed.m */,
+				D8101A7A15A1D89A00E21CBA /* Issue+list.h */,
+				D8101A7B15A1D89A00E21CBA /* Issue+list.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -290,10 +331,17 @@
 				D8497E4A1585C88300426273 /* PostView.m in Sources */,
 				D8497E511585CA5200426273 /* MarkupParser.m in Sources */,
 				D8279CAD1585E3170084C8AA /* PostColumnVIew.m in Sources */,
-				D8887B5815883E1000BD0083 /* Post.m in Sources */,
 				D809DA7015887B9A00051787 /* PostTableViewController.m in Sources */,
 				D809DA78158882D100051787 /* PostCell.m in Sources */,
 				D855AEDC1592B31B00407926 /* PostTitleView.m in Sources */,
+				D8101A5C15A1D5BC00E21CBA /* Database.xcdatamodeld in Sources */,
+				D8101A6215A1D72200E21CBA /* Picture.m in Sources */,
+				D8101A6815A1D76D00E21CBA /* Post.m in Sources */,
+				D8101A6E15A1D7B400E21CBA /* Issue.m in Sources */,
+				D8101A7115A1D7E600E21CBA /* Picture+feed.m in Sources */,
+				D8101A7815A1D86500E21CBA /* Post+feed.m in Sources */,
+				D8101A7C15A1D89A00E21CBA /* Issue+list.m in Sources */,
+				D8101A7F15A1D94600E21CBA /* IssueViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +460,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D8101A5A15A1D5BC00E21CBA /* Database.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D8101A5B15A1D5BC00E21CBA /* Database.xcdatamodel */,
+			);
+			currentVersion = D8101A5B15A1D5BC00E21CBA /* Database.xcdatamodel */;
+			path = Database.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D8497E0D1585C4E300426273 /* Project object */;
 }

@@ -30,17 +30,17 @@
             </objects>
             <point key="canvasLocation" x="-71" y="-763"/>
         </scene>
-        <!--Post Table View Controller - Root View Controller-->
+        <!--Issue View Controller - Root View Controller-->
         <scene sceneID="fsB-Vw-cIN">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I55-NM-PjX" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tableViewController clearsSelectionOnViewWillAppear="NO" id="aLk-bh-xk8" customClass="PostTableViewController" sceneMemberID="viewController">
+                <tableViewController clearsSelectionOnViewWillAppear="NO" id="aLk-bh-xk8" customClass="IssueViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="nfR-1L-abl">
                         <rect key="frame" x="0.0" y="64" width="320" height="788"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" id="oP3-oP-DDo" customClass="PostCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="IssueCell" id="oP3-oP-DDo" customClass="IssueCell">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -56,15 +56,54 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="Gtr-Ak-pqI">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="cpy-8G-Ny4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="ZPf-Bo-gYq">
                             <connections>
-                                <action selector="updatePostsList:" destination="aLk-bh-xk8" id="xgW-tK-8Ol"/>
+                                <action selector="updateIssues:" destination="aLk-bh-xk8" id="1o2-ri-9AZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="B5T-PI-T0Q" kind="push" identifier="showPosts" id="ZUz-wP-laA"/>
+                    </connections>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="463" y="-1700"/>
+        </scene>
+        <!--Post Table View Controller-->
+        <scene sceneID="FeH-bf-UQb">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FGG-22-GBP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="B5T-PI-T0Q" customClass="PostTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="eR9-yG-22p">
+                        <rect key="frame" x="0.0" y="64" width="320" height="788"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostCell" id="eNB-et-RWS" customClass="PostCell">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="B5T-PI-T0Q" id="IOx-E8-aUd"/>
+                            <outlet property="delegate" destination="B5T-PI-T0Q" id="8St-xS-G5J"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Woi-5G-Bwz">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="6G2-h3-d2T">
+                            <connections>
+                                <action selector="updatePostsList:" destination="B5T-PI-T0Q" id="U99-Ef-eTt"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
             </objects>
-            <point key="canvasLocation" x="463" y="-1700"/>
+            <point key="canvasLocation" x="959" y="-1700"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XgX-q7-ISi">
@@ -106,6 +145,9 @@
             <relationships>
                 <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
             </relationships>
+        </class>
+        <class className="IssueViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/IssueViewController.h"/>
         </class>
         <class className="PostCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PostCell.h"/>

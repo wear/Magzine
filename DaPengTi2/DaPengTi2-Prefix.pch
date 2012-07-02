@@ -3,6 +3,7 @@
 //
 
 #import <Availability.h>
+#import <CoreData/CoreData.h>
 #define PagingScrollPadding  10
 #define FrameXOffset 60
 #define FrameYOffset 60
@@ -10,6 +11,8 @@
 #define TitleHeight 120
 #define TitlePadding 60
 #define HeadLineHeight 420
+#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) 
+#define kSearchURL @"http://localhost:3000" 
 
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."

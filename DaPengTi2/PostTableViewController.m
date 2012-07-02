@@ -8,147 +8,111 @@
 
 #import "PostTableViewController.h"
 #import "DaPengTi2ViewController.h"
+#import "Issue.h"
 #import "Post.h"
+#import "Post+feed.h"
+#import "Picture.h"
+#import "Picture+feed.h"
 #import "PostCell.h"
 #import "HTMLNode.h"
-#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) 
-#define kSearchURL @"http://localhost:3000" 
 
 @interface PostTableViewController ()
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicator;
 @property(strong,nonatomic) NSArray* posts;
+@property(strong,nonatomic) NSOperationQueue* queue;
+
+-(void)sayDone:(id)sender;
 @end
 
 @implementation PostTableViewController
 @synthesize indicator = _indicator;
 @synthesize posts = _posts;
+@synthesize issue = _issue;
+@synthesize queue = _queue;
 
 - (void)awakeFromNib  // always try to be the split view's delegate
 {
     [super awakeFromNib];
-    self.splitViewController.delegate = self;
-}
-
-// splitView delegate method
-- (BOOL)splitViewController:(UISplitViewController *)svc 
-   shouldHideViewController:(UIViewController *)vc 
-              inOrientation:(UIInterfaceOrientation)orientation
-{
-    return YES;
-}
-
-- (void)splitViewController:(UISplitViewController *)svc
-     willHideViewController:(UIViewController *)aViewController
-          withBarButtonItem:(UIBarButtonItem *)barButtonItem
-       forPopoverController:(UIPopoverController *)pc
-{
-    barButtonItem.title = @"所有文章";
-    DaPengTi2ViewController* detailVC = [self.splitViewController.viewControllers lastObject];
-    detailVC.splitViewBarButtonItem = barButtonItem;
-}
-
-- (void)splitViewController:(UISplitViewController *)svc
-     willShowViewController:(UIViewController *)aViewController
-  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
-    DaPengTi2ViewController* detailVC = [self.splitViewController.viewControllers lastObject];
-    detailVC.splitViewBarButtonItem = nil;
+    self.queue = [[NSOperationQueue alloc] init];
+    [self.queue addObserver:self forKeyPath:@"operations" options:0 context:NULL];
 }
 
 - (IBAction)updatePostsList:(id)sender {
-    [self.indicator startAnimating];
-    [self getPostsFromServer];
+    [self getPostsFromHost];
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+-(void)getPostsFromHost{
+    NSURL *url = [NSURL URLWithString:[[NSString alloc] initWithFormat:@"%@/issues/%i/feed.json",kSearchURL,[self.issue.issueID intValue]]];
+    NSData* data = [NSData dataWithContentsOfURL:url];	
+    
+    NSArray* issueJson = [NSJSONSerialization 
+                          JSONObjectWithData:data 
+                          options:kNilOptions 
+                          error:nil];
+    NSArray* postsDict =  [issueJson valueForKey:@"posts"];
+    NSArray* picturesDict = [issueJson valueForKey:@"pictures"];
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    
+    NSManagedObjectContext *context  = [appDelegate managedObjectContext];    
+    
+    for (NSDictionary* postDict in postsDict) {
+       [self.issue addPostsObject:[Post postsFromFeed:postDict inManagedObjectContext:context]];
     }
-    return self;
+    
+    for (NSDictionary* pictureDict in picturesDict) {
+        [self.issue addPicturesObject:[Picture pictureFromFeed:pictureDict inManagedObjectContext:context]];
+        
+        NSString *imageUrl = [pictureDict valueForKey:@"url"];
+        NSString *identifier = [pictureDict valueForKey:@"identifier"];
+        
+        NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        path = [path stringByAppendingPathComponent:identifier];
+        
+        if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            NSBlockOperation *opration = [NSBlockOperation blockOperationWithBlock:^{
+                NSString *urlString = [NSString stringWithFormat:@"%@%@",kSearchURL,imageUrl];
+                NSURL *imgUrl = [[NSURL alloc] initWithString:urlString];
+                
+                NSData *imageData = [[NSData alloc] initWithContentsOfURL:imgUrl];
+                [[NSFileManager defaultManager] createFileAtPath:path contents:imageData attributes:nil];
+                NSLog(@"aa");
+            }];
+			[self.queue addOperation:opration];
+        } 
+    }
+}
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
+                         change:(NSDictionary *)change context:(void *)context
+{
+NSLog(@"%i",[self.queue operationCount]);
+    if (object == self.queue && [keyPath isEqualToString:@"operations"]) {
+        if ([self.queue.operations count] == 0) {
+            // Do something here when your queue has completed
+            [self performSelectorOnMainThread:@selector(sayDone:) withObject:nil waitUntilDone:NO];
+        }
+    }
+    else {
+        [super observeValueForKeyPath:keyPath ofObject:object 
+                               change:change context:context];
+    }
+}
+
+-(void)sayDone:(id)sender{
+    // 需要改进，不用一次取出所有
+    NSLog(@"aaa");
+    NSError* error;
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *context  = [appDelegate managedObjectContext];
+    [context save:&error];
+    
+	self.posts = [self.issue.posts allObjects];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.indicator.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    [self.indicator startAnimating];
-	[self getPostsFromServer];
-}
-
--(void)getPostsFromServer{
-    dispatch_async(kBgQueue, ^{
-        //下载feed
-        NSURL *url = [NSURL URLWithString:[[NSString alloc] initWithFormat:@"%@/posts/feed.json",kSearchURL]];
-        NSData* data = [NSData dataWithContentsOfURL:url];
-        
-        if (data) {
-            NSArray* postsJson = [NSJSONSerialization 
-                                  JSONObjectWithData:data //1
-                                  options:kNilOptions 
-                                  error:nil];
-            // 下载所有图片,默认图片alt是文件名
-            for (int i=0; i<[postsJson count]; i++) {
-                NSError *downloadError;
-                NSURLResponse *response;
-                NSError *parseError;
-                
-                NSDictionary* postJson = [postsJson objectAtIndex:i];
-                
-                HTMLParser *parser = [[HTMLParser alloc] initWithString:[postJson objectForKey:@"content"] error:&parseError];
-                if (!parseError) {
-                    NSArray* imageNodes = [[parser body] findChildTags:@"img"];
-                    for (HTMLNode* imgNode in imageNodes) {
-                        NSString *urlString = [NSString stringWithFormat:@"%@%@",kSearchURL,[imgNode getAttributeNamed:@"src"]];
-                        NSURL *imgUrl = [[NSURL alloc] initWithString:urlString];
-                        NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:imgUrl];
-                        NSData* result = [NSURLConnection sendSynchronousRequest:theRequest returningResponse:&response error:&downloadError];
-                        if (!downloadError) {
-                            
-                            NSString *fileName = [imgNode getAttributeNamed:@"alt"];
-                            NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-                            path = [path stringByAppendingPathComponent:fileName];
-                            
-                            [[NSFileManager defaultManager] createFileAtPath:path
-                                                                    contents:result
-                                                                  attributes:nil];
-                        }
-                    }
-                    
-                }
-            }
-        }
-		dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.indicator stopAnimating];     
-            if(data){            
-	            //----- LIST ALL FILES -----
-//                NSLog(@"LISTING ALL FILES FOUND");
-//                
-//                int Count;
-//                NSString *path;
-//                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//                path = [paths objectAtIndex:0] ;
-//                NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:NULL];
-//                for (Count = 0; Count < (int)[directoryContent count]; Count++)
-//                {
-//                    NSLog(@"File %d: %@", (Count + 1), [directoryContent objectAtIndex:Count]);
-//                }
-				self.posts = [Post postsFromJSONDate:data];
-                [self.tableView reloadData]; 
-                DaPengTi2ViewController* detailVC = [self.splitViewController.viewControllers lastObject];
-                [detailVC loadPosts:self.posts];
-            } else {
-                UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"提醒!"
-                                                                  message:@"服务不正常！请稍后重试."
-                                                                 delegate:nil
-                                                        cancelButtonTitle:@"OK"
-                                                        otherButtonTitles:nil];
-                [message show];
-            }
-            
-        });
-    });
 }
 
 - (void)viewDidUnload
@@ -182,6 +146,10 @@
 {
     PostCell *postCell = (PostCell*)[tableView 
                                            dequeueReusableCellWithIdentifier:@"PostCell"];
+    if (!postCell) {
+        postCell = [[PostCell alloc] init];
+    }
+    
 	Post *post = [self.posts objectAtIndex:indexPath.row];
     postCell.textLabel.text = post.title;
     return postCell;
