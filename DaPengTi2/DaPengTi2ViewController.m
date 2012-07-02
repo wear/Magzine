@@ -21,7 +21,7 @@
 
 @implementation DaPengTi2ViewController
 @synthesize pagingScrollView = _pagingScrollView;
-@synthesize toolbar = _toolbar;
+@synthesize toolbar;
 @synthesize post = _post;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 @synthesize recycledPages = _recycledPages;
