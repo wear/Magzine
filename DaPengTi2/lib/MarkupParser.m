@@ -158,7 +158,7 @@ static CGFloat widthCallback( void* ref ){
                                          [imgNode getAttributeNamed:@"src"],@"src",
                                          [imgNode getAttributeNamed:@"alt"],@"alt",
                                          [imgNode getAttributeNamed:@"class"],@"class",
-                                         post.postId,@"postID",
+                                         post.postID,@"postID",
                                          nil];
                 
                 [self.images addObject:imginfo];

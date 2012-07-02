@@ -2,11 +2,12 @@
 //  Post+feed.m
 //  DaPengTi2
 //
-//  Created by  on 12-6-28.
+//  Created by  on 12-7-2.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
 #import "Post+feed.h"
+
 
 @implementation Post (feed)
 + (Post *)postsFromFeed:(NSDictionary *)feed inManagedObjectContext:(NSManagedObjectContext *)context{
@@ -21,7 +22,7 @@
         // handle error
     } else if (![matches count]) {
         post = [NSEntityDescription insertNewObjectForEntityForName:@"Post"
-                                              inManagedObjectContext:context];
+                                             inManagedObjectContext:context];
         post.title = [feed valueForKey:@"title"];
         post.postID = [feed valueForKey:@"post_id"];
         post.content = [feed valueForKey:@"content"];

@@ -1,22 +1,22 @@
 //
-//  Post.m
+//  Issue.m
 //  DaPengTi2
 //
 //  Created by  on 12-7-2.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
 //
 
-#import "Post.h"
 #import "Issue.h"
+#import "Picture.h"
+#import "Post.h"
 
 
-@implementation Post
+@implementation Issue
 
+@dynamic issueID;
 @dynamic title;
-@dynamic postID;
-@dynamic layout;
-@dynamic content;
-@dynamic unread;
-@dynamic issue;
+@dynamic note;
+@dynamic posts;
+@dynamic pictures;
 
 @end
