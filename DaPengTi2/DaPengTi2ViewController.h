@@ -19,4 +19,5 @@
 @property(strong,nonatomic) NSMutableSet *visiblePages;
 
 -(void)loadPosts:(NSArray*)posts;
+-(void)showSpecifyPage:(NSInteger)pageIndex;
 @end

@@ -14,8 +14,8 @@
 @interface DaPengTi2ViewController () 
 @property(strong,nonatomic) NSArray* postList;
 
-- (void)tilePosts;
-- (void)configurePost:(PostView *)page forIndex:(NSUInteger)index;
+-(void)tilePosts;
+-(void)configurePost:(PostView *)page forIndex:(NSUInteger)index;
 -(BOOL)isCurrentOritationLandscape;
 @end
 
@@ -85,27 +85,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    
-//    NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
-//    NSArray *fontNames;
-//    NSInteger indFamily, indFont;
-//    for(indFamily=0;indFamily<[familyNames count];++indFamily)
-//    {
-//        NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
-//        fontNames =[[NSArray alloc]initWithArray:[UIFont fontNamesForFamilyName:[familyNames objectAtIndex:indFamily]]];
-//        for(indFont=0; indFont<[fontNames count]; ++indFont)
-//        {
-//            NSLog(@" Font name: %@",[fontNames objectAtIndex:indFont]);
-//        }
-//    }
-// }
     self.recycledPages = [[NSMutableSet alloc] init];
     self.visiblePages  = [[NSMutableSet alloc] init];
-
-
-    self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
-                                               self.pagingScrollView.bounds.size.height);
+    self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],self.pagingScrollView.bounds.size.height);
 }
 
 - (void)viewDidUnload
@@ -120,21 +102,20 @@
     return YES;
 }
 
--(void)updatePagingFrameAndTilePost{
+-(void)updatePagingFrameAndTilePostAfterRotate{
 	if(self.postList){
-        NSLog(@"update %@",NSStringFromCGRect(self.pagingScrollView.frame));
         PostView* CurrentPostView = [self.visiblePages anyObject];
     	self.pagingScrollView.frame = [self frameForPagingScrollView];
-        self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],
-                                                       self.pagingScrollView.bounds.size.height);
+        self.pagingScrollView.contentSize = CGSizeMake(self.pagingScrollView.bounds.size.width * [self.postList count],self.pagingScrollView.bounds.size.height);
 		[self configurePost:CurrentPostView forIndex:CurrentPostView.index];
         for (UIView* view in self.pagingScrollView.subviews) [view removeFromSuperview];
         [self.pagingScrollView addSubview:CurrentPostView];
+        [self.pagingScrollView setContentOffset:CurrentPostView.frame.origin animated:NO];
     }
 }
 
 -(void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [self updatePagingFrameAndTilePost];  
+    [self updatePagingFrameAndTilePostAfterRotate];  
 }
 
 
@@ -208,6 +189,7 @@
 
 - (CGRect)frameForPagingScrollView{
     CGRect frame = CGRectMake(0, 0, 0, 0);
+NSLog(@"is landscape %i",(int)[self isCurrentOritationLandscape]);
     if ([self isCurrentOritationLandscape]) {
         frame.size.width = [[UIScreen mainScreen] bounds].size.height;
         frame.size.height = [[UIScreen mainScreen] bounds].size.width;
@@ -229,6 +211,11 @@
     pageFrame.size.width -= (2 * PagingScrollPadding);
     pageFrame.origin.x = (pagingScrollViewFrame.size.width * index) + PagingScrollPadding;
     return pageFrame;
+}
+
+-(void)showSpecifyPage:(NSInteger)pageIndex{
+    CGRect pageFrame = [self frameForPageAtIndex:pageIndex];
+	[self.pagingScrollView setContentOffset:pageFrame.origin animated:YES];
 }
 
 #pragma mark -

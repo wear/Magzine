@@ -49,6 +49,7 @@
                           JSONObjectWithData:data 
                           options:kNilOptions 
                           error:nil];
+    
     NSArray* postsDict =  [issueJson valueForKey:@"posts"];
     NSArray* picturesDict = [issueJson valueForKey:@"pictures"];
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
@@ -67,7 +68,7 @@
         
         NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
         path = [path stringByAppendingPathComponent:identifier];
-        
+
         if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
             NSBlockOperation *opration = [NSBlockOperation blockOperationWithBlock:^{
                 NSString *urlString = [NSString stringWithFormat:@"%@%@",kSearchURL,imageUrl];
@@ -75,17 +76,15 @@
                 
                 NSData *imageData = [[NSData alloc] initWithContentsOfURL:imgUrl];
                 [[NSFileManager defaultManager] createFileAtPath:path contents:imageData attributes:nil];
-                NSLog(@"aa");
             }];
 			[self.queue addOperation:opration];
         } 
     }
 }
 
-- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object 
                          change:(NSDictionary *)change context:(void *)context
 {
-NSLog(@"%i",[self.queue operationCount]);
     if (object == self.queue && [keyPath isEqualToString:@"operations"]) {
         if ([self.queue.operations count] == 0) {
             // Do something here when your queue has completed
@@ -100,7 +99,6 @@ NSLog(@"%i",[self.queue operationCount]);
 
 -(void)sayDone:(id)sender{
     // 需要改进，不用一次取出所有
-    NSLog(@"aaa");
     NSError* error;
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     NSManagedObjectContext *context  = [appDelegate managedObjectContext];
@@ -113,6 +111,11 @@ NSLog(@"%i",[self.queue operationCount]);
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.posts = [self.issue.posts allObjects];
+    DaPengTi2ViewController* detailVC = [self.splitViewController.viewControllers lastObject];
+    [detailVC loadPosts:self.posts];
+    
 }
 
 - (void)viewDidUnload
@@ -146,9 +149,6 @@ NSLog(@"%i",[self.queue operationCount]);
 {
     PostCell *postCell = (PostCell*)[tableView 
                                            dequeueReusableCellWithIdentifier:@"PostCell"];
-    if (!postCell) {
-        postCell = [[PostCell alloc] init];
-    }
     
 	Post *post = [self.posts objectAtIndex:indexPath.row];
     postCell.textLabel.text = post.title;
@@ -159,9 +159,8 @@ NSLog(@"%i",[self.queue operationCount]);
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//	Post *post = [self.posts objectAtIndex:indexPath.row];
-//    DaPengTi2ViewController* detailVC = [self.splitViewController.viewControllers lastObject];
-//	[detailVC updatePostViewForPost:post];
+    DaPengTi2ViewController* detailVC = [self.splitViewController.viewControllers lastObject];
+	[detailVC showSpecifyPage:indexPath.row];
 }
 
 @end
